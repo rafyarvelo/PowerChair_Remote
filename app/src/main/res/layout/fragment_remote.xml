@@ -1,0 +1,72 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.smart.powerchair_remote.RemoteFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="SMART Remote"
+        android:id="@+id/Label"
+        android:layout_gravity="center_horizontal|top"
+        android:textColor="#ff080082"
+        android:textSize="75dp"
+        android:textStyle="bold|italic" />
+
+    <ImageButton
+        android:layout_width="218dp"
+        android:layout_height="235dp"
+        android:id="@+id/arrowUp"
+        android:layout_gravity="center"
+        android:src="@drawable/arrow_up"
+        android:maxHeight="10dp"
+        android:minHeight="5dp"
+        android:maxWidth="10dp"
+        android:layout_marginBottom="250dp" />
+
+    <ImageButton
+        android:layout_width="218dp"
+        android:layout_height="235dp"
+        android:id="@+id/arrowDown"
+        android:layout_gravity="center"
+        android:src="@drawable/arrow_down"
+        android:maxHeight="10dp"
+        android:minHeight="5dp"
+        android:maxWidth="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="250dp" />
+
+    <ImageButton
+        android:layout_width="218dp"
+        android:layout_height="235dp"
+        android:id="@+id/arrowLeft"
+        android:src="@drawable/arrow_left"
+        android:maxHeight="10dp"
+        android:minHeight="5dp"
+        android:maxWidth="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="75dp" />
+
+    <ImageButton
+        android:layout_width="218dp"
+        android:layout_height="235dp"
+        android:id="@+id/arrowRight"
+        android:src="@drawable/arrow_right"
+        android:maxHeight="10dp"
+        android:minHeight="5dp"
+        android:maxWidth="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="75dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="66dp"
+        android:text="EMERGENCY STOP"
+        android:id="@+id/eStop"
+        android:layout_gravity="center_horizontal|bottom" />
+
+</FrameLayout>

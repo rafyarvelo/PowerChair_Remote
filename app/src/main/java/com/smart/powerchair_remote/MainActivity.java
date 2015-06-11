@@ -104,8 +104,10 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onHelpButtonClicked(View v) {
-       // System.out.println("DISPLAYING HELP SCREEN!");
+        System.out.println("DISPLAYING HELP SCREEN!");
+        onNavigationDrawerItemSelected(HELP_SCREEN);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {

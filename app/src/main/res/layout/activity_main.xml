@@ -16,7 +16,8 @@
             android:id="@+id/helpButton"
             android:layout_gravity="right|bottom"
             android:textSize="25dp"
-            android:clickable="true" />
+            android:clickable="true"
+            android:onClick="onHelpButtonClicked" />
 
         <Button
             android:layout_width="wrap_content"

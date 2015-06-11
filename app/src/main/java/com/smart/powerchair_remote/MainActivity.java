@@ -103,7 +103,9 @@ public class MainActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
     }
 
-
+    public void onHelpButtonClicked(View v) {
+       // System.out.println("DISPLAYING HELP SCREEN!");
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {

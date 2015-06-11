@@ -15,7 +15,8 @@
             android:text="Help"
             android:id="@+id/helpButton"
             android:layout_gravity="right|bottom"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:clickable="true" />
 
         <Button
             android:layout_width="wrap_content"
@@ -23,7 +24,8 @@
             android:text="Info"
             android:id="@+id/infoButton"
             android:layout_gravity="left|bottom"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:clickable="true" />
 
     </FrameLayout>
 

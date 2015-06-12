@@ -1,25 +1,59 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.smart.powerchair_remote.RemoteFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.smart.powerchair_remote.RemoteFragment"
+    android:id="@+id/">
 
     <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top"
+        android:id="@+id/topSection">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="SMART Remote"
-        android:id="@+id/Label"
-        android:layout_gravity="center_horizontal|top"
-        android:textColor="#ff080082"
-        android:textSize="75dp"
-        android:textStyle="bold|italic" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="SMART Remote"
+            android:id="@+id/topLabel"
+            android:layout_gravity="center_horizontal|top"
+            android:textColor="#ff080082"
+            android:textSize="40dp"
+            android:textStyle="bold|italic" />
+    </RelativeLayout>
+
+
+    <!--<ImageButton
+        android:layout_width="156dp"
+        android:layout_height="207dp"
+        android:id="@+id/arrowRight"
+        android:src="@drawable/arrow_right"
+        android:maxHeight="10dp"
+        android:minHeight="5dp"
+        android:maxWidth="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="75dp" />
+
+    <ImageButton
+        android:layout_width="156dp"
+        android:layout_height="207dp"
+        android:id="@+id/arrowLeft"
+        android:src="@drawable/arrow_left"
+        android:maxHeight="10dp"
+        android:minHeight="5dp"
+        android:maxWidth="10dp"
+        android:layout_marginBottom="0dp"
+        android:layout_gravity="left|center_vertical"
+        android:layout_marginLeft="75dp" />
 
     <ImageButton
         android:layout_width="218dp"
         android:layout_height="235dp"
         android:id="@+id/arrowUp"
-        android:layout_gravity="center"
+        android:layout_gravity="bottom|center"
         android:src="@drawable/arrow_up"
         android:maxHeight="10dp"
         android:minHeight="5dp"
@@ -30,43 +64,58 @@
         android:layout_width="218dp"
         android:layout_height="235dp"
         android:id="@+id/arrowDown"
-        android:layout_gravity="center"
+        android:layout_gravity="top|center_horizontal"
         android:src="@drawable/arrow_down"
         android:maxHeight="10dp"
         android:minHeight="5dp"
         android:maxWidth="10dp"
         android:layout_marginBottom="0dp"
-        android:layout_marginTop="250dp" />
-
-    <ImageButton
-        android:layout_width="218dp"
-        android:layout_height="235dp"
-        android:id="@+id/arrowLeft"
-        android:src="@drawable/arrow_left"
-        android:maxHeight="10dp"
-        android:minHeight="5dp"
-        android:maxWidth="10dp"
-        android:layout_marginBottom="0dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="75dp" />
-
-    <ImageButton
-        android:layout_width="218dp"
-        android:layout_height="235dp"
-        android:id="@+id/arrowRight"
-        android:src="@drawable/arrow_right"
-        android:maxHeight="10dp"
-        android:minHeight="5dp"
-        android:maxWidth="10dp"
-        android:layout_marginBottom="0dp"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="75dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="66dp"
-        android:text="EMERGENCY STOP"
-        android:id="@+id/eStop"
-        android:layout_gravity="center_horizontal|bottom" />
-
+        android:layout_marginTop="250dp" />-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topSection"
+        android:layout_above="@id/bottomSection"
+        android:id="@+id/MiddleSection">
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/circle"
+            android:layout_gravity="center"
+            android:id="@+id/circle"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/right_arrow"
+            android:layout_gravity="center"
+            android:id="@+id/arrowRight"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/circle"
+            android:layout_toEndOf="@+id/circle" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/up_arrow"
+            android:layout_gravity="center"
+            android:id="@+id/upArrow"
+            android:layout_above="@+id/circle"
+            android:layout_alignLeft="@+id/circle"
+            android:layout_alignStart="@+id/circle" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/bottomSection">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="EMERGENCY STOP"
+            android:id="@+id/eStop"
+            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 </FrameLayout>

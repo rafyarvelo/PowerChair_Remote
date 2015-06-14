@@ -6,8 +6,8 @@
     <item>
         <shape android:shape="rectangle">
             <size
-                android:width="40dp"
-                android:height="100dp" />
+                android:width="14.5dp"
+                android:height="80.3dp" />
             <solid android:color="#5EB888" />
             <corners android:radius="0dp"/>
         </shape>

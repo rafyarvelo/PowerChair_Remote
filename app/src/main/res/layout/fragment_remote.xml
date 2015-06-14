@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.smart.powerchair_remote.RemoteFragment"
-    android:id="@+id/">
+    android:id="@+id/remoteFrame"
+    android:background="#e6b121">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
@@ -23,54 +24,20 @@
             android:textSize="40dp"
             android:textStyle="bold|italic" />
     </RelativeLayout>
-
-
-    <!--<ImageButton
-        android:layout_width="156dp"
-        android:layout_height="207dp"
-        android:id="@+id/arrowRight"
-        android:src="@drawable/arrow_right"
-        android:maxHeight="10dp"
-        android:minHeight="5dp"
-        android:maxWidth="10dp"
-        android:layout_marginBottom="0dp"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="75dp" />
-
-    <ImageButton
-        android:layout_width="156dp"
-        android:layout_height="207dp"
-        android:id="@+id/arrowLeft"
-        android:src="@drawable/arrow_left"
-        android:maxHeight="10dp"
-        android:minHeight="5dp"
-        android:maxWidth="10dp"
-        android:layout_marginBottom="0dp"
-        android:layout_gravity="left|center_vertical"
-        android:layout_marginLeft="75dp" />
-
-    <ImageButton
-        android:layout_width="218dp"
-        android:layout_height="235dp"
-        android:id="@+id/arrowUp"
-        android:layout_gravity="bottom|center"
-        android:src="@drawable/arrow_up"
-        android:maxHeight="10dp"
-        android:minHeight="5dp"
-        android:maxWidth="10dp"
-        android:layout_marginBottom="250dp" />
-
-    <ImageButton
-        android:layout_width="218dp"
-        android:layout_height="235dp"
-        android:id="@+id/arrowDown"
-        android:layout_gravity="top|center_horizontal"
-        android:src="@drawable/arrow_down"
-        android:maxHeight="10dp"
-        android:minHeight="5dp"
-        android:maxWidth="10dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="250dp" />-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/bottomSection">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="EMERGENCY STOP"
+            android:id="@+id/eStop"
+            android:layout_gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -78,8 +45,8 @@
         android:layout_above="@id/bottomSection"
         android:id="@+id/MiddleSection">
         <View
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/circle"
             android:layout_gravity="center"
             android:id="@+id/circle"
@@ -97,25 +64,36 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/up_arrow"
+            android:background="@drawable/right_arrow"
             android:layout_gravity="center"
-            android:id="@+id/upArrow"
-            android:layout_above="@+id/circle"
-            android:layout_alignLeft="@+id/circle"
-            android:layout_alignStart="@+id/circle" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:id="@+id/bottomSection">
+            android:id="@+id/arrowLeft"
+            android:rotation="180"
+            android:layout_alignTop="@+id/arrowRight"
+            android:layout_toLeftOf="@+id/circle"
+            android:layout_toStartOf="@+id/circle" />
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="EMERGENCY STOP"
-            android:id="@+id/eStop"
+            android:layout_height="wrap_content"
+            android:background="@drawable/right_arrow"
             android:layout_gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:id="@+id/arrowBottom"
+            android:rotation="90"
+            android:layout_below="@+id/circle"
+            android:layout_alignLeft="@+id/circle"
+            android:layout_alignStart="@+id/circle"
+            android:layout_marginTop="20dp" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/right_arrow"
+            android:layout_gravity="center"
+            android:id="@+id/arrowTop"
+            android:rotation="-90"
+            android:layout_above="@+id/circle"
+            android:layout_alignLeft="@+id/circle"
+            android:layout_alignStart="@+id/circle"
+            android:layout_marginBottom="20dp" />
+        <!--android:layout_alignCenter="@+id/circle"-->
+            <!--android:layout_alignStart="@+id/circle"-->
     </RelativeLayout>
 </FrameLayout>

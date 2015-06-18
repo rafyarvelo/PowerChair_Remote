@@ -1,12 +1,19 @@
 package com.smart.powerchair_remote;
 
 import android.app.Activity;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -17,7 +24,7 @@ import android.view.ViewGroup;
  * Use the {@link RemoteFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RemoteFragment extends android.support.v4.app.Fragment {
+public class RemoteFragment extends android.support.v4.app.Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -26,6 +33,10 @@ public class RemoteFragment extends android.support.v4.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    float x = 0;
+    float y = 0;
+
 
     private OnRemoteInteractionListener mListener;
 
@@ -49,7 +60,9 @@ public class RemoteFragment extends android.support.v4.app.Fragment {
 
     public RemoteFragment() {
         // Required empty public constructor
+
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,8 +76,26 @@ public class RemoteFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_remote, container, false);
+        View view = inflater.inflate(R.layout.fragment_remote, container, false);
+
+        final TextView xText = (TextView) view.findViewById(R.id.xLocation);
+        final TextView yText = (TextView) view.findViewById(R.id.yLocation);
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction() == MotionEvent.ACTION_MOVE){
+                    //do something
+                    x = event.getX();
+                    y = event.getY();
+                    xText.setText("xcoord "+x);
+                    yText.setText("ycoord "+y);
+
+                }
+                return true;
+            }
+        });
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

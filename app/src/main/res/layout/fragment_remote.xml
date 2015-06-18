@@ -6,7 +6,6 @@
     android:id="@+id/remoteFrame"
     android:background="#e6b121">
 
-    <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -93,7 +92,39 @@
             android:layout_alignLeft="@+id/circle"
             android:layout_alignStart="@+id/circle"
             android:layout_marginBottom="20dp" />
-        <!--android:layout_alignCenter="@+id/circle"-->
-            <!--android:layout_alignStart="@+id/circle"-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/xLocation"
+            android:editable="true"
+            android:layout_alignBottom="@+id/arrowTop"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Medium Text"
+            android:id="@+id/yLocation"
+            android:editable="true"
+            android:layout_above="@+id/arrowTop"
+            android:layout_alignLeft="@+id/xLocation"
+            android:layout_alignStart="@+id/xLocation" />
+
     </RelativeLayout>
 </FrameLayout>
+
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.smart.powerchair_remote.RemoteFragment">
+    <com.smart.powerchair_remote.JoystickView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"/>
+</RelativeLayout>-->

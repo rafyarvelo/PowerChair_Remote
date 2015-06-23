@@ -1,7 +1,11 @@
+//http://obviam.net/index.php/a-very-basic-the-game-loop-for-android/
+
 package com.smart.powerchair_remote;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,6 +17,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -30,15 +36,15 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    RelativeLayout layout_joystick;
+    ImageView image_joystick, image_border;
+    TextView textView1, textView2, textView3, textView4, textView5;
+
+    JoyStickClass js;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    float x = 0;
-    float y = 0;
-
-
-    private OnRemoteInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -73,54 +79,73 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         }
     }
 
-    @Override
+   @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_remote, container, false);
+       View view = inflater.inflate(R.layout.fragment_remote, container, false);
 
-        final TextView xText = (TextView) view.findViewById(R.id.xLocation);
-        final TextView yText = (TextView) view.findViewById(R.id.yLocation);
+       textView1 = (TextView)view.findViewById(R.id.textView1);
+       textView2 = (TextView)view.findViewById(R.id.textView2);
+       textView3 = (TextView)view.findViewById(R.id.textView3);
+       textView4 = (TextView)view.findViewById(R.id.textView4);
+       textView5 = (TextView)view.findViewById(R.id.textView5);
 
-        view.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
+       layout_joystick = (RelativeLayout)view.findViewById(R.id.layout_joystick);
 
-                if(event.getAction() == MotionEvent.ACTION_MOVE){
-                    //do something
-                    x = event.getX();
-                    y = event.getY();
-                    xText.setText("xcoord "+x);
-                    yText.setText("ycoord "+y);
+       js = new JoyStickClass(getActivity().getApplicationContext()
+               , layout_joystick, R.drawable.image_button);
+       js.setStickSize(150, 150);
+       js.setLayoutSize(500, 500);
+       js.setLayoutAlpha(150);
+       js.setStickAlpha(100);
+       js.setOffset(90);
+       js.setMinimumDistance(50);
 
-                }
-                return true;
-            }
-        });
-        return view;
+       layout_joystick.setOnTouchListener(new View.OnTouchListener() {
+           public boolean onTouch(View arg0, MotionEvent arg1) {
+               js.drawStick(arg1);
+               if(arg1.getAction() == MotionEvent.ACTION_DOWN
+                       || arg1.getAction() == MotionEvent.ACTION_MOVE) {
+                   textView1.setText("X : " + String.valueOf(js.getX()));
+                   textView2.setText("Y : " + String.valueOf(js.getY()));
+                   textView3.setText("Angle : " + String.valueOf(js.getAngle()));
+                   textView4.setText("Distance : " + String.valueOf(js.getDistance()));
+
+                   int direction = js.get8Direction();
+                   if(direction == JoyStickClass.STICK_UP) {
+                       textView5.setText("Direction : Up");
+                   } else if(direction == JoyStickClass.STICK_UPRIGHT) {
+                       textView5.setText("Direction : Up Right");
+                   } else if(direction == JoyStickClass.STICK_RIGHT) {
+                       textView5.setText("Direction : Right");
+                   } else if(direction == JoyStickClass.STICK_DOWNRIGHT) {
+                       textView5.setText("Direction : Down Right");
+                   } else if(direction == JoyStickClass.STICK_DOWN) {
+                       textView5.setText("Direction : Down");
+                   } else if(direction == JoyStickClass.STICK_DOWNLEFT) {
+                       textView5.setText("Direction : Down Left");
+                   } else if(direction == JoyStickClass.STICK_LEFT) {
+                       textView5.setText("Direction : Left");
+                   } else if(direction == JoyStickClass.STICK_UPLEFT) {
+                       textView5.setText("Direction : Up Left");
+                   } else if(direction == JoyStickClass.STICK_NONE) {
+                       textView5.setText("Direction : Center");
+                   }
+               } else if(arg1.getAction() == MotionEvent.ACTION_UP) {
+                   textView1.setText("X :");
+                   textView2.setText("Y :");
+                   textView3.setText("Angle :");
+                   textView4.setText("Distance :");
+                   textView5.setText("Direction :");
+               }
+               return true;
+           }
+
+       });
+
+       return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onRemoteInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-           // mListener = (OnRemoteInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     /**
      * This interface must be implemented by activities that contain this

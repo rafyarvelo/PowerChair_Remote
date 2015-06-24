@@ -5,60 +5,83 @@
     android:layout_height="match_parent"
     tools:context="com.smart.powerchair_remote.RemoteFragment"
     android:id="@+id/remoteFrame"
-    android:background="#e6b121">
+    android:background="#648b8b8b">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/remoteLabel"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="30dp"
-        android:orientation="vertical" >
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/remoteLabel"
+        android:layout_alignEnd="@+id/remoteLabel"
+        android:layout_marginLeft="10sp">
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textViewX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="X"
-            android:textColor="#444444"
-            android:textSize="20dp" />
+            android:textColor="#ff000000"
+            android:textSize="35sp" />
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textViewY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Y"
-            android:textColor="#444444"
-            android:textSize="20dp" />
+            android:textColor="#ff000000"
+            android:textSize="35sp" />
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textViewAngle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Angle"
-            android:textColor="#444444"
-            android:textSize="20dp" />
+            android:textColor="#ff000000"
+            android:textSize="35sp" />
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViewDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Distance"
-            android:textColor="#444444"
-            android:textSize="20dp" />
+            android:textColor="#ff000000"
+            android:textSize="35sp" />
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textViewDirection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Direction"
-            android:textColor="#444444"
-            android:textSize="20dp" />
+            android:textColor="#ff000000"
+            android:textSize="35sp" />
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/layout_joystick"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_alignParentRight="true"
+        android:background="@drawable/image_button_bg"
         android:layout_centerVertical="true"
-        android:layout_marginRight="36dp"
-        android:background="@drawable/image_button_bg" >
+        android:layout_centerHorizontal="true">
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="SMART Remote"
+        android:id="@+id/remoteLabel"
+        android:layout_gravity="center_horizontal|top"
+        android:textColor="#ff080082"
+        android:textStyle="bold|italic"
+        android:textSize="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Emergency Stop"
+        android:id="@+id/eStopBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
     <!--<RelativeLayout-->

@@ -17,16 +17,38 @@
             android:layout_gravity="right|bottom"
             android:textSize="25dp"
             android:clickable="true"
-            android:onClick="onHelpButtonClicked" />
+            android:onClick="onHelpButtonClicked"
+            android:layout_marginRight="10sp" />
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="233dp"
             android:layout_height="wrap_content"
-            android:text="Info"
-            android:id="@+id/infoButton"
-            android:layout_gravity="left|bottom"
-            android:textSize="25dp"
-            android:clickable="true" />
+            android:layout_gravity="bottom|left"
+            android:gravity="left"
+            android:layout_marginLeft="10sp">
+
+            <TextView
+                android:id="@+id/connStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connection Status:"
+                android:textColor="#ff000000"
+                android:textSize="20sp"
+                android:layout_gravity="left|top"
+                android:elegantTextHeight="true"
+                android:autoText="false" />
+
+            <TextView
+                android:id="@+id/textViewConnStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NOT CONNECTED"
+                android:textColor="#ff000000"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal|bottom|left"
+                android:background="#8fff0300" />
+        </LinearLayout>
 
     </FrameLayout>
 

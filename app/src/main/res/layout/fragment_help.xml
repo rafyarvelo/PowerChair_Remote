@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/help_text"
-        android:id="@+id/textView2"
+        android:id="@+id/textViewY"
         android:layout_gravity="center"
         android:textSize="25dp" />
 

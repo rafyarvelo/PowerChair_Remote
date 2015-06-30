@@ -14,18 +14,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.view.Display;
+import com.smart.powerchair_remote.TelemetryBridge;
 
 //This is the Main Activity
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+                   TelemetryFragment.OnFragmentInteractionListener,
+                   RemoteFragment.OnRemoteInteractionListener,
+                   HelpFragment.OnHelpSelectedListener,
+                   GoogleMapsFragment.OnFragmentInteractionListener
         {
 
     private final int SMART_REMOTE = 0;
     private final int TM_STREAM    = 1;
-    private final int HELP_SCREEN  = 2;
+    private final int MAP_SCREEN   = 2;
+    private final int HELP_SCREEN  = 3;
 
-    private DrawerLayout mDrawerLayout;
-    private ListView mListView;
+    private TelemetryBridge tmBridge;
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -46,12 +54,12 @@ public class MainActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
+        tmBridge = new TelemetryBridge();
+
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
-
     }
 
 
@@ -63,13 +71,16 @@ public class MainActivity extends ActionBarActivity
         switch (position)
         {
             case SMART_REMOTE:
-                objFragment = new RemoteFragment();
+                objFragment = RemoteFragment.newInstance(tmBridge);
                 break;
             case TM_STREAM:
-                objFragment = new TelemetryFragment();
+                objFragment = TelemetryFragment.newInstance(tmBridge);
                 break;
             case HELP_SCREEN:
                 objFragment = new HelpFragment();
+                break;
+            case MAP_SCREEN:
+                objFragment = GoogleMapsFragment.newInstance(tmBridge);
                 break;
             default:
                 objFragment = PlaceholderFragment.newInstance(position + 1);
@@ -83,15 +94,18 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
+        switch (number + 1) {
+            case SMART_REMOTE:
                 mTitle = getString(R.string.title_remote);
                 break;
-            case 2:
+            case TM_STREAM:
                 mTitle = getString(R.string.title_tm_stream);
                 break;
-            case 3:
+            case HELP_SCREEN:
                 mTitle = getString(R.string.title_help);
+                break;
+            case MAP_SCREEN:
+                mTitle = getString(R.string.title_google_maps);
                 break;
         }
     }
@@ -104,7 +118,6 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onHelpButtonClicked(View v) {
-        System.out.println("DISPLAYING HELP SCREEN!");
         onNavigationDrawerItemSelected(HELP_SCREEN);
     }
 
@@ -136,6 +149,33 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onTelemetryFragmentInteraction()
+    {
+        TelemetryFragment fragment = (TelemetryFragment)
+                getSupportFragmentManager().findFragmentById(R.id.telemetryFragment);
+
+        if (fragment != null)
+            fragment.updateTelemetryFields();
+    }
+
+    @Override
+    public void onRemoteInteraction(RemoteFragment rf)
+    {
+        System.out.println("Starting Remote Fragment...");
+    }
+
+    @Override
+    public void onMapInteraction(Uri uri)
+    {
+        System.out.println("Starting Map Fragment...");
+    }
+
+            @Override
+    public void onHelpInteraction(Uri uri)
+    {
+        System.out.println("Starting Help Fragment...");
+    }
            /**
      * A placeholder fragment containing a simple view.
      */
@@ -174,22 +214,6 @@ public class MainActivity extends ActionBarActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
-
-        public void onTelemetryFragmentInteraction(Uri uri)
-        {
-
-        }
-
-        public void onRemoteInteraction(Uri uri)
-        {
-
-        }
-        public void onHelpInteraction(Uri uri)
-        {
-
-        }
-
-
     }
 
 }

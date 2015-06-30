@@ -78,7 +78,7 @@ public class HelpFragment extends android.support.v4.app.Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-           // mListener = (OnHelpSelectedListener) activity;
+            mListener = (OnHelpSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");

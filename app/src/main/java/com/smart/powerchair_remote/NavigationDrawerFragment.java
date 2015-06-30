@@ -104,7 +104,9 @@ public class NavigationDrawerFragment extends Fragment {
                 new String[]{
                         getString(R.string.title_remote),
                         getString(R.string.title_tm_stream),
-                        getString(R.string.title_help),
+                        getString(R.string.title_google_maps),
+                        getString(R.string.title_help)
+
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

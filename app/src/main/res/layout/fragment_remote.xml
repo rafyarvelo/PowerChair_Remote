@@ -1,57 +1,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@android:style/TextAppearance.DeviceDefault.Medium"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:in.C="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.smart.powerchair_remote.RemoteFragment"
-    android:id="@+id/remoteFrame"
+    android:id="@+id/remoteFragment"
     android:background="#648b8b8b">
 
     <LinearLayout
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_below="@+id/remoteLabel"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/remoteLabel"
-        android:layout_alignEnd="@+id/remoteLabel"
-        android:layout_marginLeft="10sp">
+        android:layout_alignRight="@+id/eStopBtn"
+        android:layout_alignEnd="@+id/eStopBtn"
+        android:id="@+id/js_meas_layout">
         <TextView
             android:id="@+id/textViewX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="X"
             android:textColor="#ff000000"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
         <TextView
             android:id="@+id/textViewY"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Y"
             android:textColor="#ff000000"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
         <TextView
             android:id="@+id/textViewAngle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Angle"
             android:textColor="#ff000000"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
         <TextView
             android:id="@+id/textViewDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Distance"
             android:textColor="#ff000000"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
         <TextView
             android:id="@+id/textViewDirection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Direction"
             android:textColor="#ff000000"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/layout_joystick"
@@ -59,7 +61,8 @@
         android:layout_height="200dp"
         android:background="@drawable/image_button_bg"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:onClick="onRemoteInteraction">
     </RelativeLayout>
 
     <TextView

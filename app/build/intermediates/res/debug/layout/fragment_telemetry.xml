@@ -1,0 +1,539 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@android:style/TextAppearance.DeviceDefault.Medium"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.smart.powerchair_remote.TelemetryFragment"
+    android:id="@+id/telemetryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="SMART Telemetry"
+        android:id="@+id/Label"
+        android:layout_gravity="center_horizontal|top"
+        android:textColor="#ff080082"
+        android:textStyle="bold|italic"
+        android:textSize="70dp"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="15"
+        android:columnCount="5"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/gridLayout"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/Label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="FIELD"
+            android:id="@+id/tmFieldLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:background="#665d83b7"
+            android:textSize="25dp" />
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="UNITS"
+            android:id="@+id/tmUnitsLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:background="#665d83b7"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Ground Speed:"
+            android:id="@+id/GrndSpdLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Meters/Second"
+            android:id="@+id/GrndSpdUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="2"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Altitude:"
+            android:id="@+id/AltitudeLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Meters"
+            android:id="@+id/AltitudeUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="3"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Latitude:"
+            android:id="@+id/LatitudeLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Degrees"
+            android:id="@+id/LatitudeUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="4"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Longitude :"
+            android:id="@+id/LongitudeLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="5"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Degrees"
+            android:id="@+id/LongitudeUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="5"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Range to Object:"
+            android:id="@+id/RngToObjLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="6"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="VALUE"
+            android:id="@+id/tmValueLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:background="#665d83b7"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.00"
+            android:id="@+id/GrndSpdValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.00"
+            android:id="@+id/AltitudeValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="3"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.00"
+            android:id="@+id/LatitudeValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="4"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.00"
+            android:id="@+id/LongitudeValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="5"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.00"
+            android:id="@+id/RngToObjValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="6"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Meters"
+            android:id="@+id/RngToObjUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="6"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="LED Forward Freq"
+            android:id="@+id/ledFwdLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="7"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Hertz"
+            android:id="@+id/ledFwdFreqUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="7"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="LED Right Freq"
+            android:id="@+id/ledRightLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="8"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Hertz"
+            android:id="@+id/ledRightFreqUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="8"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="LED Left Label"
+            android:id="@+id/ledLeftLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="9"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Hertz"
+            android:id="@+id/ledLeftFreqUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="9"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="LED Back Freq"
+            android:id="@+id/ledBackLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="10"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.00"
+            android:id="@+id/ledFwdFreq"
+            android:layout_marginTop="0dp"
+            android:layout_row="7"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.00"
+            android:id="@+id/ledRightFreq"
+            android:layout_marginTop="0dp"
+            android:layout_row="8"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.00"
+            android:id="@+id/ledLeftFreq"
+            android:layout_marginTop="0dp"
+            android:layout_row="9"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0.00"
+            android:id="@+id/ledBackFreq"
+            android:layout_marginTop="0dp"
+            android:layout_row="10"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Hertz"
+            android:id="@+id/ledBackFreqUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="10"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="15dp"
+            android:textSize="25dp" />
+    </GridLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Fetching Telemetry..."
+            android:id="@+id/textView"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:layout_gravity="center"
+            android:max="100"
+            android:progress="50"
+            android:indeterminate="false" />
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="601dp"
+        android:layout_height="wrap_content"
+        android:rowCount="7"
+        android:columnCount="5"
+        android:layout_gravity="center_horizontal|bottom"
+        android:id="@+id/gridLayout2"
+        android:layout_marginBottom="103dp"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    </GridLayout>
+
+</RelativeLayout>
+<!-- From: file:/C:/Users/Rafy/AndroidStudioProjects/PowerChair_Remote/app/src/main/res/layout/fragment_telemetry.xml -->

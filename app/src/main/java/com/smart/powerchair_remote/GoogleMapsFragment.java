@@ -83,7 +83,7 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
      * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
      * method in {@link #onResume()} to guarantee that it will be called.
      */
-    private void setUpMapIfNeeded() {
+    public void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -95,6 +95,8 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
                 setUpMap();
             }
         }
+        else
+            setUpMap();
     }
 
     /**

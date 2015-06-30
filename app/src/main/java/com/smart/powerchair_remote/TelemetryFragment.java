@@ -24,6 +24,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     private View mView;
     private TextView tvGrndSpeed, tvAltitude, tvLatitude, tvLongitude, tvRngToObj;
     private TextView tvLEDFwdFreq,tvLEDRightFreq,tvLEDLeftFreq,tvLEDBackFreq;
+    private boolean populated;
 
     public static TelemetryFragment newInstance(TelemetryBridge tmBridgeRef) {
         TelemetryFragment fragment = new TelemetryFragment();
@@ -38,13 +39,14 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        populated = false;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_telemetry, container, false);
-
+        populated = false;
         tvGrndSpeed    = (TextView) mView.findViewById(R.id.GrndSpdValue);
         tvAltitude     = (TextView) mView.findViewById(R.id.AltitudeValue);
         tvLatitude     = (TextView) mView.findViewById(R.id.LatitudeValue);
@@ -54,8 +56,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         tvLEDRightFreq = (TextView) mView.findViewById(R.id.ledRightFreq);
         tvLEDLeftFreq  = (TextView) mView.findViewById(R.id.ledLeftFreq);
         tvLEDBackFreq  = (TextView) mView.findViewById(R.id.ledBackFreq);
-
-        updateTelemetryFields();
+        populated = true;
         // Inflate the layout for this fragment
         return mView;
     }
@@ -69,15 +70,18 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
 
     public void updateTelemetryFields()
     {
-        tvGrndSpeed.setText(Float.toString(tmBridge.tmData.convertedData.getGroundSpeed()));
-        tvAltitude.setText(Float.toString(tmBridge.tmData.convertedData.getAltitude()));
-        tvLatitude.setText(Float.toString(tmBridge.tmData.convertedData.getLatitude()));
-        tvLongitude.setText(Float.toString(tmBridge.tmData.convertedData.getLongitude()));
-        tvRngToObj.setText(Float.toString(tmBridge.tmData.convertedData.getRangeToObject()));
-        tvLEDFwdFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Forward_Freq()));
-        tvLEDRightFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Right_Freq()));
-        tvLEDLeftFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Left_Freq()));
-        tvLEDBackFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Backward_Freq()));
+        if (populated)
+        {
+            tvGrndSpeed.setText(Float.toString(tmBridge.tmData.convertedData.getGroundSpeed()));
+            tvAltitude.setText(Float.toString(tmBridge.tmData.convertedData.getAltitude()));
+            tvLatitude.setText(Float.toString(tmBridge.tmData.convertedData.getLatitude()));
+            tvLongitude.setText(Float.toString(tmBridge.tmData.convertedData.getLongitude()));
+            tvRngToObj.setText(Float.toString(tmBridge.tmData.convertedData.getRangeToObject()));
+            tvLEDFwdFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Forward_Freq()));
+            tvLEDRightFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Right_Freq()));
+            tvLEDLeftFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Left_Freq()));
+            tvLEDBackFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Backward_Freq()));
+        }
     }
 
     @Override

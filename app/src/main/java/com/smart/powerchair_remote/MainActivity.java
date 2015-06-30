@@ -81,6 +81,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case MAP_SCREEN:
                 objFragment = GoogleMapsFragment.newInstance(tmBridge);
+                ((GoogleMapsFragment) objFragment).setUpMapIfNeeded();
                 break;
             default:
                 objFragment = PlaceholderFragment.newInstance(position + 1);

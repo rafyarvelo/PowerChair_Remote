@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import com.smart.powerchair_remote.TelemetryBridge;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -28,6 +28,9 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
     private GoogleMap mMap;
     private TelemetryBridge tmBridge;
     private OnFragmentInteractionListener mListener;
+    private View mView;
+    private MapView mMapView;
+
     private LatLng mLatLng;
     private MarkerOptions mMarkerOptions;
     private String mMarkerTitle;
@@ -51,6 +54,7 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setUpMapIfNeeded();
     }
 
@@ -83,8 +87,9 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            //mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-              //      .getMap();
+            //mMap = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map))
+                    //.getMap();
+
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 setUpMap();
@@ -108,14 +113,15 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
         mMap.addMarker(mMarkerOptions);
 
         mMap.setMyLocationEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(UCF_LatLng, DEFAULT_ZOOM));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, DEFAULT_ZOOM));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mView = inflater.inflate(R.layout.fragment_google_maps, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_google_maps, container, false);
+        return mView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

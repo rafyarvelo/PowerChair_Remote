@@ -6,6 +6,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
@@ -23,7 +25,8 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     private OnFragmentInteractionListener mListener;
     private View mView;
     private TextView tvGrndSpeed, tvAltitude, tvLatitude, tvLongitude, tvRngToObj;
-    private TextView tvLEDFwdFreq,tvLEDRightFreq,tvLEDLeftFreq,tvLEDBackFreq;
+    private TextView tvLEDFwdFreq,tvLEDRightFreq,tvLEDLeftFreq,tvLEDBackFreq, tvTelemetryTitle, tvTmStatusBar;
+    private GridLayout tvGridLayout;
     private boolean populated;
 
     public static TelemetryFragment newInstance(TelemetryBridge tmBridgeRef) {
@@ -47,6 +50,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_telemetry, container, false);
         populated = false;
+        tvTelemetryTitle = (TextView) mView.findViewById(R.id.Label);
         tvGrndSpeed    = (TextView) mView.findViewById(R.id.GrndSpdValue);
         tvAltitude     = (TextView) mView.findViewById(R.id.AltitudeValue);
         tvLatitude     = (TextView) mView.findViewById(R.id.LatitudeValue);
@@ -56,6 +60,14 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         tvLEDRightFreq = (TextView) mView.findViewById(R.id.ledRightFreq);
         tvLEDLeftFreq  = (TextView) mView.findViewById(R.id.ledLeftFreq);
         tvLEDBackFreq  = (TextView) mView.findViewById(R.id.ledBackFreq);
+//        tvGridLayout = (GridLayout) mView.findViewById(R.id.gridLayout);
+//        tvTmStatusBar = (TextView) mView.findViewById(R.id.gridLayout2);
+
+//        int vWidth = mView.getWidth();
+//        int vHeight = mView.getHeight();
+//
+//        tvGridLayout.setMinimumHeight(vHeight - tvTelemetryTitle.getHeight() - tvTmStatusBar.getHeight());
+
         populated = true;
         // Inflate the layout for this fragment
         return mView;

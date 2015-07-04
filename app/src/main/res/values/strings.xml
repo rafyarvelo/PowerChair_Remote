@@ -20,4 +20,23 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+    <string name="TelemetryTitle">SMART Telemetry</string>
+    <string name="tmField">FIELD</string>
+    <string name="tmUNITS">UNITS</string>
+    <string name="tmGroundSpeed">Ground Speed</string>
+    <string name="tmMeterSec">Meter/Sec</string>
+    <string name="tmAltitude">Altitude</string>
+    <string name="tmMeters">Meters</string>
+    <string name="tmLatitude">Latitude</string>
+    <string name="tmDegrees">Degrees</string>
+    <string name="tmLongitude">Longitude</string>
+    <string name="tmRange2Object">Range to Object</string>
+    <string name="tmValue">VALUE</string>
+    <string name="tm0speed">0.00</string>
+    <string name="tmLedFFreq">LED Forward Freq</string>
+    <string name="tmHertz">Hertz</string>
+    <string name="tmLedRFreq">LED Right Freq</string>
+    <string name="LedBFreq">LED Back Freq</string>
+    <string name="tmFetch">Fetching Telemetry...</string>
+    <string name="LedLeftFreq">LED Left Label</string>
 </resources>

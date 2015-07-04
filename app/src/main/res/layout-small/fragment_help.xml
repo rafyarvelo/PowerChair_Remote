@@ -1,0 +1,28 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@android:style/TextAppearance.DeviceDefault.Medium"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.smart.powerchair_remote.HelpFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="SMART Help"
+        android:id="@+id/Label"
+        android:layout_gravity="center_horizontal|top"
+        android:textColor="#ff080082"
+        android:textSize="75dp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:layout_width="374dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/help_text"
+        android:id="@+id/textViewY"
+        android:layout_gravity="center"
+        android:textSize="25dp" />
+
+</FrameLayout>

@@ -1,0 +1,580 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@android:style/TextAppearance.DeviceDefault.Medium"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.smart.powerchair_remote.TelemetryFragment"
+    android:id="@+id/telemetryFragment"
+    android:background="#ffe8cc02"
+    android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/TelemetryTitle"
+        android:id="@+id/Label"
+        android:layout_gravity="center_horizontal|top"
+        android:textColor="#ff080082"
+        android:textStyle="bold|italic"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="20"
+        android:textSize="40sp"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rowCount="11"
+        android:columnCount="5"
+        android:layout_gravity="fill"
+        android:id="@+id/gridLayout"
+        android:layout_below="@+id/Label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_weight="60"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmField"
+            android:id="@+id/tmFieldLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:background="#665d83b7"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmUNITS"
+            android:id="@+id/tmUnitsLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:background="#665d83b7"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmGroundSpeed"
+            android:id="@+id/GrndSpdLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmMeterSec"
+            android:id="@+id/GrndSpdUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="2"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmAltitude"
+            android:id="@+id/AltitudeLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmMeters"
+            android:id="@+id/AltitudeUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="3"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmLatitude"
+            android:id="@+id/LatitudeLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmDegrees"
+            android:id="@+id/LatitudeUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="4"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmLongitude"
+            android:id="@+id/LongitudeLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="5"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmDegrees"
+            android:id="@+id/LongitudeUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="5"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmRange2Object"
+            android:id="@+id/RngToObjLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="6"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmValue"
+            android:id="@+id/tmValueLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            style="@style/Base.TextAppearance.AppCompat.Title"
+            android:background="#665d83b7"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tm0speed"
+            android:id="@+id/GrndSpdValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tm0speed"
+            android:id="@+id/AltitudeValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="3"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tm0speed"
+            android:id="@+id/LatitudeValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="4"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tm0speed"
+            android:id="@+id/LongitudeValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="5"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tm0speed"
+            android:id="@+id/RngToObjValue"
+            android:layout_marginTop="0dp"
+            android:layout_row="6"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmMeters"
+            android:id="@+id/RngToObjUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="6"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmLedFFreq"
+            android:id="@+id/ledFwdLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="7"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmHertz"
+            android:id="@+id/ledFwdFreqUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="7"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmLedRFreq"
+            android:id="@+id/ledRightLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="8"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmHertz"
+            android:id="@+id/ledRightFreqUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="8"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/LedLeftFreq"
+            android:id="@+id/ledLeftLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="9"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmHertz"
+            android:id="@+id/ledLeftFreqUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="9"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/LedBFreq"
+            android:id="@+id/ledBackLabel"
+            android:layout_marginTop="0dp"
+            android:layout_row="10"
+            android:layout_column="1"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tm0speed"
+            android:id="@+id/ledFwdFreq"
+            android:layout_marginTop="0dp"
+            android:layout_row="7"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tm0speed"
+            android:id="@+id/ledRightFreq"
+            android:layout_marginTop="0dp"
+            android:layout_row="8"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tm0speed"
+            android:id="@+id/ledLeftFreq"
+            android:layout_marginTop="0dp"
+            android:layout_row="9"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tm0speed"
+            android:id="@+id/ledBackFreq"
+            android:layout_marginTop="0dp"
+            android:layout_row="10"
+            android:layout_column="2"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/tmHertz"
+            android:id="@+id/ledBackFreqUnits"
+            android:layout_marginTop="0dp"
+            android:layout_row="10"
+            android:layout_column="3"
+            android:textStyle="bold|italic"
+            android:typeface="sans"
+            android:textColor="#ff000000"
+            android:layout_margin="5dp"
+            android:textSize="20sp"/>
+            <!--android:textSize="20sp" -->
+    </GridLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+    </LinearLayout>
+
+    <!--<GridLayout-->
+        <!--android:layout_width="601dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:rowCount="7"-->
+        <!--android:columnCount="5"-->
+        <!--android:layout_gravity="center_horizontal|bottom"-->
+        <!--android:id="@+id/gridLayout2"-->
+        <!--android:layout_marginBottom="103dp"-->
+        <!--android:layout_above="@+id/linearLayout"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_weight="1">-->
+    <!--</GridLayout>-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tmFetch"
+        android:id="@+id/fetchTM"
+        android:layout_weight="10"
+        android:layout_gravity="bottom"
+        android:layout_below="@+id/gridLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/linearLayout"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:max="100"
+        android:progress="50"
+        android:indeterminate="false"
+        android:layout_weight="10"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/fetchTM"
+        android:layout_alignRight="@+id/Label"
+        android:layout_alignEnd="@+id/Label" />
+
+</LinearLayout>

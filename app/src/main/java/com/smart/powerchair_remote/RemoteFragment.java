@@ -64,7 +64,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        mView = inflater.inflate(R.layout.fragment_remote, container, false);
-
+       tmBridge = new TelemetryBridge(getActivity());
        textViewX = (TextView)mView.findViewById(R.id.textViewX);
        textViewY = (TextView)mView.findViewById(R.id.textViewY);
        textViewAngle = (TextView)mView.findViewById(R.id.textViewAngle);
@@ -93,22 +93,27 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
 
                    int direction = js.get8Direction();
                    if(direction == JoyStickClass.STICK_UP) {
+                       tmBridge.setDirection("F");
                        textViewDirection.setText("Direction : Up");
                    } else if(direction == JoyStickClass.STICK_UPRIGHT) {
                        textViewDirection.setText("Direction : Up Right");
                    } else if(direction == JoyStickClass.STICK_RIGHT) {
+                       tmBridge.setDirection("R");
                        textViewDirection.setText("Direction : Right");
                    } else if(direction == JoyStickClass.STICK_DOWNRIGHT) {
                        textViewDirection.setText("Direction : Down Right");
                    } else if(direction == JoyStickClass.STICK_DOWN) {
+                       tmBridge.setDirection("B");
                        textViewDirection.setText("Direction : Down");
                    } else if(direction == JoyStickClass.STICK_DOWNLEFT) {
                        textViewDirection.setText("Direction : Down Left");
                    } else if(direction == JoyStickClass.STICK_LEFT) {
+                       tmBridge.setDirection("L");
                        textViewDirection.setText("Direction : Left");
                    } else if(direction == JoyStickClass.STICK_UPLEFT) {
                        textViewDirection.setText("Direction : Up Left");
                    } else if(direction == JoyStickClass.STICK_NONE) {
+                       tmBridge.setDirection("N");
                        textViewDirection.setText("Direction : Center");
                    }
                } else if(arg1.getAction() == MotionEvent.ACTION_UP) {

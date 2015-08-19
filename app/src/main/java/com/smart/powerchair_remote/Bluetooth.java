@@ -1,3 +1,4 @@
+/*
 package com.smart.powerchair_remote;
 
 import android.bluetooth.BluetoothAdapter;
@@ -15,9 +16,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+*/
 /**
  * Created by asand_000 on 8/8/2015.
- */
+ *//*
+
 public class Bluetooth {
     //These lines are used for debugging pruposes
     private static final String TAG = "Bluetooth";
@@ -267,11 +270,13 @@ public class Bluetooth {
             }
         }
     }
-    /**
+    */
+/**
      * This thread runs while attempting to make an outgoing connection
      * with a device. It runs straight through; the connection either
      * succeeds or fails.
-     */
+     *//*
+
     private class ConnectThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final BluetoothDevice mmDevice;
@@ -324,10 +329,12 @@ public class Bluetooth {
             }
         }
     }
-    /**
+    */
+/**
      * This thread runs during a connection with a remote device.
      * It handles all incoming and outgoing transmissions.
-     */
+     *//*
+
     private class ConnectedThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
@@ -366,10 +373,12 @@ public class Bluetooth {
                 }
             }
         }
-        /**
+        */
+/**
          * Write to the connected OutStream.
          * @param buffer  The bytes to write
-         */
+         *//*
+
         public void write(byte[] buffer) {
             try {
                 mmOutStream.write(buffer);
@@ -389,3 +398,4 @@ public class Bluetooth {
         }
     }
 }
+*/

@@ -1,13 +1,17 @@
 package com.smart.powerchair_remote;
 
 import android.app.Activity;
-import android.content.Context;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +22,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.view.Display;
 import com.smart.powerchair_remote.TelemetryBridge;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
 //This is the Main Activity
 public class MainActivity extends ActionBarActivity
@@ -33,6 +42,8 @@ public class MainActivity extends ActionBarActivity
     private final int MAP_SCREEN   = 2;
     private final int HELP_SCREEN  = 3;
 
+
+
     private TelemetryBridge tmBridge;
 
     /**
@@ -46,6 +57,8 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +68,15 @@ public class MainActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        //tmBridge = new TelemetryBridge(getApplicationContext());
+        tmBridge = new TelemetryBridge();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+
+
     }
 
 
@@ -147,7 +163,6 @@ public class MainActivity extends ActionBarActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
 
         return super.onOptionsItemSelected(item);
     }

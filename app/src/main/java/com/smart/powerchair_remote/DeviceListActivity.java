@@ -1,3 +1,4 @@
+/*
 package com.smart.powerchair_remote;
 
 import android.app.Activity;
@@ -23,12 +24,14 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import java.util.Set;
 
+*/
 /**
  * This Activity appears as a dialog. It lists any paired devices and
  * devices detected in the area after discovery. When a device is chosen
  * by the user, the MAC address of the device is sent back to the parent
  * Activity in the result Intent.
- */
+ *//*
+
 public class DeviceListActivity extends android.support.v4.app.Fragment {
     // Debugging
     private static final String TAG = "DeviceListActivity";
@@ -106,9 +109,11 @@ public class DeviceListActivity extends android.support.v4.app.Fragment {
         getActivity().unregisterReceiver(mReceiver);
     }
 
-    /**
+    */
+/**
      * Start device discover with the BluetoothAdapter
-     */
+     *//*
+
     private void doDiscovery() {
         if (D) Log.d(TAG, "doDiscovery()");
         // Indicate scanning in the title
@@ -164,4 +169,4 @@ public class DeviceListActivity extends android.support.v4.app.Fragment {
             }
         }
     };
-}
+}*/

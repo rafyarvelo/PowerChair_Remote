@@ -81,8 +81,6 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
     OutputStream mmOutputStream;
     InputStream mmInputStream;
 
-    String deviceName = "Aaron-0";
-
     BluetoothDevice bluetoothDevice = null;
 
     JoyStickClass js;
@@ -112,41 +110,20 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
 
         super.onCreate(savedInstanceState);
 
-        connected    = false;
+        tmBridge = new TelemetryBridge();
+        tmBridge.connect();
+        connected    = tmBridge.GetConnected();
         dataSent     = false;
         dataReceived = false;
 
-
-
-        Set<BluetoothDevice> devices = btAdapter.getDefaultAdapter().getBondedDevices();
-        if (devices != null) {
-            for (BluetoothDevice device : devices) {
-                if (deviceName.equals(device.getName())) {
-                    bluetoothDevice = device;
-                    connected = true;
-                    break;
-                }
-                else{
-                    connected = false;
-                }
-            }
-        }
-
-        UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); //Standard SerialPortService ID
-
-        try {
-            mmSocket = bluetoothDevice.createRfcommSocketToServiceRecord(uuid);
-            mmSocket.connect();
-            mmOutputStream = mmSocket.getOutputStream();
-            mmInputStream = mmSocket.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-            connected = false;
-        }
-
         //Optional
-        System.out.println("Bluetooth Opened");
-        Toast.makeText(getActivity(), "Bluetooth Opened", Toast.LENGTH_SHORT).show();
+        if(connected) {
+            System.out.println("Bluetooth Opened");
+            Toast.makeText(getActivity(), "Bluetooth Opened", Toast.LENGTH_SHORT).show();
+        } else{
+            System.out.println("Bluetooth Not Opened");
+            Toast.makeText(getActivity(), "Bluetooth Not Opened", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -193,34 +170,34 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
                     int direction = js.get8Direction();
                     if(direction == JoyStickClass.STICK_UP) {
                         if(connected) {
-                            sendDataToPairedDevice("F");
+                            tmBridge.sendDataToPairedDevice("f");
                         }
                         textViewDirection.setText("Direction : Up");
                     } else if(direction == JoyStickClass.STICK_UPRIGHT) {
                         textViewDirection.setText("Direction : Up Right");
                     } else if(direction == JoyStickClass.STICK_RIGHT) {
                         if(connected) {
-                            sendDataToPairedDevice("R");
+                            tmBridge.sendDataToPairedDevice("r");
                         }
                         textViewDirection.setText("Direction : Right");
                     } else if(direction == JoyStickClass.STICK_DOWNRIGHT) {
                         textViewDirection.setText("Direction : Down Right");
                     } else if(direction == JoyStickClass.STICK_DOWN) {
                         if(connected) {
-                            sendDataToPairedDevice("D");
+                            tmBridge.sendDataToPairedDevice("b");
                         }
                         textViewDirection.setText("Direction : Down");
                     } else if(direction == JoyStickClass.STICK_DOWNLEFT) {
                         textViewDirection.setText("Direction : Down Left");
                     } else if(direction == JoyStickClass.STICK_LEFT) {
                         if(connected) {
-                            sendDataToPairedDevice("L");
+                            tmBridge.sendDataToPairedDevice("l");
                         }
                     } else if(direction == JoyStickClass.STICK_UPLEFT) {
                         textViewDirection.setText("Direction : Up Left");
                     } else if(direction == JoyStickClass.STICK_NONE) {
                         if(connected) {
-                            sendDataToPairedDevice("N");
+                            tmBridge.sendDataToPairedDevice("s");
                         }
                         textViewDirection.setText("Direction : Center");
                     }
@@ -267,18 +244,6 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
     public interface OnRemoteInteractionListener {
         // TODO: Update argument type and name
         public void onRemoteInteraction(RemoteFragment rf);
-    }
-
-    private void sendDataToPairedDevice(String message){
-
-
-        try {
-            mmOutputStream.write(message.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
     }
 
 }

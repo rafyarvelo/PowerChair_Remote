@@ -167,37 +167,29 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
                     textViewAngle   .setText("Angle : " + String.valueOf(js.getAngle()));
                     textViewDistance.setText("Distance : " + String.valueOf(js.getDistance()));
 
-                    int direction = js.get8Direction();
+                    int direction = js.get4Direction();
                     if(direction == JoyStickClass.STICK_UP) {
                         if(connected) {
                             tmBridge.sendDataToPairedDevice("f");
                         }
                         textViewDirection.setText("Direction : Up");
-                    } else if(direction == JoyStickClass.STICK_UPRIGHT) {
-                        textViewDirection.setText("Direction : Up Right");
                     } else if(direction == JoyStickClass.STICK_RIGHT) {
                         if(connected) {
                             tmBridge.sendDataToPairedDevice("r");
                         }
                         textViewDirection.setText("Direction : Right");
-                    } else if(direction == JoyStickClass.STICK_DOWNRIGHT) {
-                        textViewDirection.setText("Direction : Down Right");
                     } else if(direction == JoyStickClass.STICK_DOWN) {
                         if(connected) {
                             tmBridge.sendDataToPairedDevice("b");
                         }
                         textViewDirection.setText("Direction : Down");
-                    } else if(direction == JoyStickClass.STICK_DOWNLEFT) {
-                        textViewDirection.setText("Direction : Down Left");
                     } else if(direction == JoyStickClass.STICK_LEFT) {
                         if(connected) {
                             tmBridge.sendDataToPairedDevice("l");
                         }
-                    } else if(direction == JoyStickClass.STICK_UPLEFT) {
-                        textViewDirection.setText("Direction : Up Left");
                     } else if(direction == JoyStickClass.STICK_NONE) {
                         if(connected) {
-                            tmBridge.sendDataToPairedDevice("s");
+                            tmBridge.sendDataToPairedDevice("f");
                         }
                         textViewDirection.setText("Direction : Center");
                     }

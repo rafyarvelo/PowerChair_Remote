@@ -86,6 +86,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
     JoyStickClass js;
 
     RelativeLayout layout_joystick;
+    Button eStopBtn;
     ImageView image_joystick, image_border;
     TextView textViewX, textViewY, textViewAngle, textViewDistance, textViewDirection;
 
@@ -141,6 +142,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         textViewDistance = (TextView)mView.findViewById(R.id.textViewDistance);
         textViewDirection = (TextView)mView.findViewById(R.id.textViewDirection);
         layout_joystick = (RelativeLayout)mView.findViewById(R.id.layout_joystick);
+        eStopBtn = (Button)mView.findViewById(R.id.eStopBtn);
 
         js = new JoyStickClass(getActivity().getApplicationContext()
                 , layout_joystick, R.drawable.image_button);
@@ -160,12 +162,18 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         layout_joystick.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 js.drawStick(arg1);
+
                 if(arg1.getAction() == MotionEvent.ACTION_DOWN
                         || arg1.getAction() == MotionEvent.ACTION_MOVE) {
                     textViewX       .setText("X : " + String.valueOf(js.getX()));
                     textViewY       .setText("Y : " + String.valueOf(js.getY()));
                     textViewAngle   .setText("Angle : " + String.valueOf(js.getAngle()));
                     textViewDistance.setText("Distance : " + String.valueOf(js.getDistance()));
+
+                   /* if(eStopBtn.isPressed()){
+                        tmBridge.sendDataToPairedDevice("s");
+                        return true;
+                    }*/
 
                     int direction = js.get4Direction();
                     if(direction == JoyStickClass.STICK_UP) {

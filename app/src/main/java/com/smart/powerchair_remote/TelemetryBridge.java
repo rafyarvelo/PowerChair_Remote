@@ -19,7 +19,7 @@ import java.util.UUID;
 public class TelemetryBridge
 {
 
-    final String deviceName = "Aaron-0";
+    final String deviceName = "raspberrypi-0";
 
     public TelemetryData tmData;
     private boolean connected;

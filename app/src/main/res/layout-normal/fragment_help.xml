@@ -13,7 +13,7 @@
         android:id="@+id/Label"
         android:layout_gravity="center_horizontal|top"
         android:textColor="#ff080082"
-        android:textSize="75dp"
+        android:textSize="65dp"
         android:textStyle="bold|italic" />
 
     <TextView

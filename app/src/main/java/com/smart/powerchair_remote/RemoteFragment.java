@@ -112,7 +112,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         super.onCreate(savedInstanceState);
 
         tmBridge = new TelemetryBridge();
-        tmBridge.connect();
+        //tmBridge.connect();
         connected    = tmBridge.GetConnected();
         dataSent     = false;
         dataReceived = false;

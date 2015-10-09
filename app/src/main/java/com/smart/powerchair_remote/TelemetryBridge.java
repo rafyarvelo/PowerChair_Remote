@@ -20,6 +20,7 @@ public class TelemetryBridge
 {
 
     final String deviceName = "raspberrypi-0";
+    final byte[] buffer = new byte[1024];
 
     public TelemetryData tmData;
     private boolean connected;
@@ -67,9 +68,9 @@ public class TelemetryBridge
             connected = false;
             e.printStackTrace();
         }
-
-        return connected;
+        connected;
     }
+        return
 
     private boolean GetData()
     {
@@ -89,6 +90,16 @@ public class TelemetryBridge
         try {
             mmOutputStream.write(message.getBytes());
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getDataFromPairedDevice()
+    {
+        int bytesReceived = 0;
+        try{
+            bytesReceived= mmInputStream.read(buffer);
+        } catch (IOException e){
             e.printStackTrace();
         }
     }

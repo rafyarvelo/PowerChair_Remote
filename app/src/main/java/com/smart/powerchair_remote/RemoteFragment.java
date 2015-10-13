@@ -112,8 +112,11 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         super.onCreate(savedInstanceState);
 
         tmBridge = new TelemetryBridge();
-        //tmBridge.connect();
         connected    = tmBridge.GetConnected();
+        if(!connected)
+        {
+            tmBridge.connect();
+        }
         dataSent     = false;
         dataReceived = false;
 
@@ -152,11 +155,6 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         js.setStickAlpha(100);
         js.setOffset(90);
         js.setMinimumDistance(50);
-
-
-            final Handler handler = new Handler();
-
-            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
         layout_joystick.setOnTouchListener(new View.OnTouchListener() {

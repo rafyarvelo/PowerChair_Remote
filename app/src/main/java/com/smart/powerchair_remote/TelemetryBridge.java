@@ -16,6 +16,12 @@ import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class TelemetryBridge
 {
 
@@ -68,9 +74,9 @@ public class TelemetryBridge
             connected = false;
             e.printStackTrace();
         }
-        connected;
+        return connected;
     }
-        return
+
 
     private boolean GetData()
     {
@@ -94,13 +100,36 @@ public class TelemetryBridge
         }
     }
 
-    public void getDataFromPairedDevice()
+    public SmartDataTypes.TMFrame getDataFromPairedDevice()
     {
-        int bytesReceived = 0;
+        BytesUtil byte2object = new BytesUtil();
+        byte[] bytesReceived = new byte[1024];
         try{
-            bytesReceived= mmInputStream.read(buffer);
+            //implement compareTo
+            mmInputStream.read(buffer);
+            if(buffer.length > 0)
+            {
+                for (byte b : buffer) {
+                    bytesReceived[b] = buffer[b];
+                }
+                Object bytesObject = byte2object.toObject(bytesReceived);
+                SmartDataTypes.TMFrame tmFrame = (SmartDataTypes.TMFrame) bytesObject;
+
+                if(tmFrame.MsgId.compareTo(new SmartDataTypes.MsgIdType("BLT!")) == 0)
+                {
+                    return tmFrame;
+                }
+                return null;
+            }
+            else
+            {
+                return null;
+            }
         } catch (IOException e){
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 }

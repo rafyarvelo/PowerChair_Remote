@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -27,7 +31,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     private TextView tvGrndSpeed, tvAltitude, tvLatitude, tvLongitude, tvRngToObj;
     private TextView tvLEDFwdFreq,tvLEDRightFreq,tvLEDLeftFreq,tvLEDBackFreq, tvTelemetryTitle, tvTmStatusBar;
     private GridLayout tvGridLayout;
-    private boolean populated;
+    private boolean populated, connected;
 
     public static TelemetryFragment newInstance(TelemetryBridge tmBridgeRef) {
         TelemetryFragment fragment = new TelemetryFragment();
@@ -42,7 +46,21 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        populated = false;
+        tmBridge = new TelemetryBridge();
+        connected    = tmBridge.GetConnected();
+        if(!connected)
+        {
+            tmBridge.connect();
+        }
+
+        //Optional
+        if(connected) {
+            System.out.println("Bluetooth Opened");
+            Toast.makeText(getActivity(), "Bluetooth Opened", Toast.LENGTH_SHORT).show();
+        } else{
+            System.out.println("Bluetooth Not Opened");
+            Toast.makeText(getActivity(), "Bluetooth Not Opened", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -60,6 +78,14 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         tvLEDRightFreq = (TextView) mView.findViewById(R.id.ledRightFreq);
         tvLEDLeftFreq  = (TextView) mView.findViewById(R.id.ledLeftFreq);
         tvLEDBackFreq  = (TextView) mView.findViewById(R.id.ledBackFreq);
+
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override public void run() {
+                updateTelemetryFields();
+            }
+        }, 1000, 500);
+
 //        tvGridLayout = (GridLayout) mView.findViewById(R.id.gridLayout);
 //        tvTmStatusBar = (TextView) mView.findViewById(R.id.gridLayout2);
 
@@ -82,17 +108,24 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
 
     public void updateTelemetryFields()
     {
-        if (populated)
+        SmartDataTypes.TMFrame tmFrameData = tmBridge.getDataFromPairedDevice();
+        if (connected && tmFrameData!=null)
         {
-            tvGrndSpeed.setText(Float.toString(tmBridge.tmData.convertedData.getGroundSpeed()));
-            tvAltitude.setText(Float.toString(tmBridge.tmData.convertedData.getAltitude()));
-            tvLatitude.setText(Float.toString(tmBridge.tmData.convertedData.getLatitude()));
-            tvLongitude.setText(Float.toString(tmBridge.tmData.convertedData.getLongitude()));
-            tvRngToObj.setText(Float.toString(tmBridge.tmData.convertedData.getRangeToObject()));
-            tvLEDFwdFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Forward_Freq()));
-            tvLEDRightFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Right_Freq()));
-            tvLEDLeftFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Left_Freq()));
-            tvLEDBackFreq.setText(Float.toString(tmBridge.tmData.convertedData.getLED_Backward_Freq()));
+            tvGrndSpeed.setText(Float.toString(tmFrameData.brsFrame.sensorData.gpsData.groundSpeed));
+            tvAltitude.setText(Float.toString(tmFrameData.brsFrame.sensorData.gpsData.altitude));
+            tvLatitude.setText(Float.toString(tmFrameData.brsFrame.sensorData.gpsData.latitude));
+            tvLongitude.setText(Float.toString(tmFrameData.brsFrame.sensorData.gpsData.longitude));
+            //think about range
+            tvRngToObj.setText(Float.toString(tmFrameData.brsFrame.sensorData.rangeFinderData.rangeFront));
+            tvLEDFwdFreq.setText(Float.toString(tmFrameData.ledForward.frequency));
+            tvLEDRightFreq.setText(Float.toString(tmFrameData.ledRight.frequency));
+            tvLEDLeftFreq.setText(Float.toString(tmFrameData.ledLeft.frequency));
+            tvLEDBackFreq.setText(Float.toString(tmFrameData.ledBackward.frequency));
+        }
+        else if(!connected)
+        {
+            System.out.println("Bluetooth Not Connected TM Update");
+            Toast.makeText(getActivity(), "Bluetooth Not Connected TM Update", Toast.LENGTH_LONG).show();
         }
     }
 

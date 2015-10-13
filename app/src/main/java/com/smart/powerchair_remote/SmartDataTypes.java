@@ -28,7 +28,7 @@ public class SmartDataTypes
 
 //5 Byte Message ID
     
-    class MsgIdType implements Comparable<MsgIdType>
+    static class MsgIdType implements Comparable<MsgIdType>
     {
         public static final int MSG_ID_SIZE  = 5; //Bytes
         public byte[] id;
@@ -40,30 +40,23 @@ public class SmartDataTypes
         @Override
         public int compareTo(MsgIdType rhs) 
         {
-            int sum = 0;
-            
-            for (int i = 0; i < MSG_ID_SIZE; i++) {
-                sum = this.id[i] - rhs.id[i];
+            for (int i = 0; i < MSG_ID_SIZE; i++)
+            {
+                if (this.id[i] != rhs.id[i])
+                {
+                    return 1;
+                }
             }
-            
-            return sum;
+            return 0;
         }
     }
-    
-//BRS Frame to the BCI
-//    public static final byte[] BRS2BCI_MSG_ID = {'B','R', 'S', '!','\0'};
-//
-////BCI TM Frame Back to the BRS
-//    public static final byte[] BCI2BRS_MSG_ID = {'B','C', 'I', '!','\0'};
-//
+
 ////BRS to Mobile Device Communication
 //    public static final byte[] BRS2MD_MSG_ID  = {'B', 'L' , 'T' , '!', '\0'};
 //
 ////Mobile Device to BRS Communication
 //    public static final byte[] MD2BRS_MSG_ID  = {'T', 'L' , 'B' , '!', '\0'};
-        
-    public final MsgIdType BRS2BCI_MSG_ID = new MsgIdType("BRS!");
-    public final MsgIdType BCI2BRS_MSG_ID = new MsgIdType("BCI!");
+
     public final MsgIdType BRS2MD_MSG_ID  = new MsgIdType("BLT!");
     public final MsgIdType MD2BRS_MSG_ID  = new MsgIdType("TLB!");
     

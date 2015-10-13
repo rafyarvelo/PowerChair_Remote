@@ -25,7 +25,7 @@ import java.io.ObjectOutputStream;
 public class TelemetryBridge
 {
 
-    final String deviceName = "raspberrypi-0";
+    final String deviceName = "Rafy-PC-0";
     final byte[] buffer = new byte[1024];
 
     public TelemetryData tmData;
@@ -43,7 +43,7 @@ public class TelemetryBridge
         dataSent     = false;
         dataReceived = false;
         tmData       = new TelemetryData();
-        connected = false;
+        //connected = false;
     }
 
     //Try to Establish Connection with SMART Electronics

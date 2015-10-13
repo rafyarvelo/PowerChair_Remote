@@ -116,6 +116,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         if(!connected)
         {
             tmBridge.connect();
+            connected = tmBridge.GetConnected();
         }
         dataSent     = false;
         dataReceived = false;

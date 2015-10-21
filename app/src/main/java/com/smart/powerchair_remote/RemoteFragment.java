@@ -47,7 +47,7 @@ import java.util.UUID;
  * Activities that contain this fragment must implement the
  * {@link com.smart.powerchair_remote.RemoteFragment.OnRemoteInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RemoteFragment#newInstance} factory method to
+ * Use the {@link RemoteFragment#Instance} factory method to
  * create an instance of this fragment.
  */
 public class RemoteFragment extends android.support.v4.app.Fragment{
@@ -95,7 +95,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
 
 
     // TODO: Rename and change types and number of parameters
-    public static RemoteFragment newInstance(TelemetryBridge tmBridgeRef) {
+    public static RemoteFragment Instance(TelemetryBridge tmBridgeRef) {
         RemoteFragment fragment = new RemoteFragment();
         fragment.setTmBridge(tmBridgeRef);
         return fragment;
@@ -111,7 +111,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
 
         super.onCreate(savedInstanceState);
 
-        tmBridge = new TelemetryBridge();
+        tmBridge = TelemetryBridge.Instance();
         connected    = tmBridge.GetConnected();
         if(!connected)
         {

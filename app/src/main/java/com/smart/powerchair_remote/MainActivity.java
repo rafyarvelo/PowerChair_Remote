@@ -68,7 +68,7 @@ public class MainActivity extends ActionBarActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        tmBridge = new TelemetryBridge();
+        tmBridge = TelemetryBridge.Instance();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -88,7 +88,7 @@ public class MainActivity extends ActionBarActivity
         switch (position)
         {
             case SMART_REMOTE:
-                objFragment = RemoteFragment.newInstance(tmBridge);
+                objFragment = RemoteFragment.Instance(tmBridge);
                 break;
             case TM_STREAM:
                 objFragment = TelemetryFragment.newInstance(tmBridge);

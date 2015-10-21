@@ -169,13 +169,13 @@ public class SmartDataTypes
 //===============================================
 
 //==================Flasher Types==================
-    public enum LED_Group_ID {
+    /*public enum LED_Group_ID {
         LED_FORWARD,
         LED_BACKWARD,
         LED_RIGHT,
         LED_LEFT,
         NUM_LED_GROUPS
-    }
+    }*/
 
     class LEDGroup
     {
@@ -184,10 +184,10 @@ public class SmartDataTypes
         public static final short LED_RIGHT_FREQ_DEFAULT    = 30;
         public static final short LED_LEFT_FREQ_DEFAULT     = 40;
 
-        LED_Group_ID id;
+        int id;
         short frequency;
 
-        LEDGroup(LED_Group_ID id, short freq)
+        LEDGroup(int id, short freq)
         {
             this.id = id;
             this.frequency = freq;
@@ -230,13 +230,27 @@ public class SmartDataTypes
  */
     }
 
+
+    public class ProcessingResult
+    {
+        public char command;
+        public int confidence;
+
+        ProcessingResult()
+        {
+            command = 'n';
+            confidence = 0;
+        }
+    }
 //Full Telemetry Frame
-    class TMFrame
+    public class TMFrame
     {
         MsgIdType MsgId; //Message Sent From BCI -> BRS -> MD
         int timeStamp;
-        BCIState bciState;
-        EEGFrame eegFrame; //Only the Latest Frame, EEG Telemetry is managed by the C_EEG_IO class
+        int bciState;
+        char lastCommand;
+        int lastConfidence;
+        ProcessingResult processingResult;
         BRSFrame brsFrame;
         LEDGroup ledForward;
         LEDGroup ledBackward;
@@ -251,13 +265,15 @@ public class SmartDataTypes
         {
             MsgId                   = new MsgIdType("BCI!");
             timeStamp               = 0;
-            bciState                = BCIState.BCI_OFF;
-            eegFrame                = new EEGFrame();
+            bciState                = 0;
+            lastCommand             = 0;
+            lastConfidence          = 0;
+            processingResult        =  new ProcessingResult();
             brsFrame                = new BRSFrame();
-            ledForward              = new LEDGroup(LED_Group_ID.LED_FORWARD, LEDGroup.LED_FORWARD_FREQ_DEFAULT );
-            ledBackward             = new LEDGroup(LED_Group_ID.LED_BACKWARD, LEDGroup.LED_BACKWARD_FREQ_DEFAULT );
-            ledRight                = new LEDGroup(LED_Group_ID.LED_RIGHT, LEDGroup.LED_RIGHT_FREQ_DEFAULT );
-            ledLeft                 = new LEDGroup(LED_Group_ID.LED_LEFT, LEDGroup.LED_LEFT_FREQ_DEFAULT );
+            ledForward              = new LEDGroup(0, LEDGroup.LED_FORWARD_FREQ_DEFAULT );
+            ledBackward             = new LEDGroup(1, LEDGroup.LED_BACKWARD_FREQ_DEFAULT );
+            ledRight                = new LEDGroup(2, LEDGroup.LED_RIGHT_FREQ_DEFAULT );
+            ledLeft                 = new LEDGroup(3, LEDGroup.LED_LEFT_FREQ_DEFAULT );
             eegConnectionStatus     = false;
             pccConnectionStatus     = false;
             brsConnectionStatus     = false;
@@ -265,5 +281,9 @@ public class SmartDataTypes
         }
     }
 
+    public TMFrame createTMFrame()
+    {
+        return new TMFrame();
+    }
 //###########################################
 }

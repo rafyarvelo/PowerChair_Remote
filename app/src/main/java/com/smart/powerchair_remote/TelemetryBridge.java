@@ -1,5 +1,6 @@
 package com.smart.powerchair_remote;
 
+import java.util.*;
 /**
  * Created by Rafy on 6/29/2015.
  */
@@ -26,10 +27,9 @@ public class TelemetryBridge
 {
 
     final String deviceName = "Rafy-PC-0";
-    final byte[] buffer = new byte[1024];
 
     public TelemetryData tmData;
-    private boolean connected;
+    private boolean connected = false;
     private boolean dataSent;
     private boolean dataReceived;
     BluetoothAdapter btAdapter;
@@ -37,12 +37,27 @@ public class TelemetryBridge
     BluetoothSocket mmSocket;
     OutputStream mmOutputStream;
     InputStream mmInputStream;
+    static TelemetryBridge ptr = null;
 
-    public TelemetryBridge()
+    static TelemetryBridge Instance()
+    {
+        //TelemetryBridge ptr = null;
+
+        if (ptr == null)
+        {
+            ptr = new TelemetryBridge();
+        }
+
+        return ptr;
+    }
+
+
+    private TelemetryBridge()
     {
         dataSent     = false;
         dataReceived = false;
         tmData       = new TelemetryData();
+
         //connected = false;
     }
 
@@ -100,36 +115,17 @@ public class TelemetryBridge
         }
     }
 
-    public SmartDataTypes.TMFrame getDataFromPairedDevice()
-    {
-        BytesUtil byte2object = new BytesUtil();
-        byte[] bytesReceived = new byte[1024];
-        try{
-            //implement compareTo
-            mmInputStream.read(buffer);
-            if(buffer.length > 0)
-            {
-                for (byte b : buffer) {
-                    bytesReceived[b] = buffer[b];
-                }
-                Object bytesObject = byte2object.toObject(bytesReceived);
-                SmartDataTypes.TMFrame tmFrame = (SmartDataTypes.TMFrame) bytesObject;
 
-                if(tmFrame.MsgId.compareTo(new SmartDataTypes.MsgIdType("BLT!")) == 0)
-                {
-                    return tmFrame;
-                }
-                return null;
-            }
-            else
-            {
-                return null;
-            }
+    //Get Raw Buffer
+    public byte[] getDataFromPairedDevice()
+    {
+        byte[] buffer = new byte[1024];
+
+        try{
+            mmInputStream.read(buffer);
         } catch (IOException e){
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-        return null;
+        return buffer;
     }
 }

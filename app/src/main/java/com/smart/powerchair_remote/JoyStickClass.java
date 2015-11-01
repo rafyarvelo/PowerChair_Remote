@@ -54,7 +54,7 @@ public class JoyStickClass {
 	}
 	
 	public void drawStick(MotionEvent arg1) {
-		position_x = (int) (arg1.getX() - (params.width / 2));
+		position_x = (int) (arg1.getX() - (params.width / 2)+37.5);
 		position_y = (int) (arg1.getY() - (params.height / 2));
 	    distance = (float) Math.sqrt(Math.pow(position_x, 2) + Math.pow(position_y, 2));
 	    angle = (float) cal_angle(position_x, position_y);

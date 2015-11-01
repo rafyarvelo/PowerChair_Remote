@@ -1,12 +1,20 @@
 package com.smart.powerchair_remote;
 //Help Fragment
 import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
 
 
 /**
@@ -17,7 +25,7 @@ import android.view.ViewGroup;
  * Use the {@link HelpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HelpFragment extends android.support.v4.app.Fragment {
+public class HelpFragment extends android.support.v4.app.Fragment implements AdapterView.OnItemSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -26,8 +34,18 @@ public class HelpFragment extends android.support.v4.app.Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Spinner spinner;
+    private boolean connected;
 
     private OnHelpSelectedListener mListener;
+
+    private View mView;
+
+    private TelemetryBridge tmBridge;
+
+    String availableDevicesArray[];
+
+    TextView connectionLabel;
 
     /**
      * Use this factory method to create a new instance of
@@ -58,13 +76,38 @@ public class HelpFragment extends android.support.v4.app.Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        tmBridge = TelemetryBridge.Instance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)  {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_help, container, false);
+        mView =  inflater.inflate(R.layout.fragment_help, container, false);
+
+        connectionLabel = (TextView) mView.findViewById(R.id.textViewConnStatus);
+        if(tmBridge.GetConnected())
+        {
+            connectionLabel.setText("CONNECTED TO "+tmBridge.GetDevice());
+            connectionLabel.setBackgroundColor(Color.GREEN);
+        }
+        else
+        {
+            connectionLabel.setText("NOT CONNECTED");
+            connectionLabel.setBackgroundColor(Color.RED);
+        }
+
+        spinner = (Spinner) mView.findViewById(R.id.spinner);
+
+        availableDevicesArray = new String[tmBridge.GetAvailableDevices().size()];
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, (String[]) tmBridge.GetAvailableDevices().toArray(availableDevicesArray));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
+        return mView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -89,6 +132,47 @@ public class HelpFragment extends android.support.v4.app.Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+    {
+
+        tmBridge.SetDevice((String) tmBridge.GetAvailableDevices().toArray()[i]);
+        tmBridge = TelemetryBridge.Instance();
+        connected    = tmBridge.GetConnected();
+        if(connected)
+        {
+            try {
+                tmBridge.disconnect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            connected = tmBridge.GetConnected();
+            System.out.println("Connection Closed");
+            Toast.makeText(getActivity(), "Connection Closed", Toast.LENGTH_SHORT).show();
+        }
+        if(!connected)
+        {
+            tmBridge.connect();
+            connected    = tmBridge.GetConnected();
+            if(connected) {
+                System.out.println("Bluetooth Opened");
+                Toast.makeText(getActivity(), "Bluetooth Opened", Toast.LENGTH_SHORT).show();
+                connectionLabel.setText("CONNECTED TO " + tmBridge.GetDevice());
+                connectionLabel.setBackgroundColor(Color.GREEN);
+            } else{
+                System.out.println("Bluetooth Not Opened");
+                Toast.makeText(getActivity(), "Bluetooth Not Opened", Toast.LENGTH_SHORT).show();
+                connectionLabel.setText("NOT CONNECTED");
+                connectionLabel.setBackgroundColor(Color.RED);
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
     /**

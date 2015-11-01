@@ -151,7 +151,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         js = new JoyStickClass(getActivity().getApplicationContext()
                 , layout_joystick, R.drawable.image_button);
         js.setStickSize(150, 150);
-        js.setLayoutSize(750, 750);
+        js.setLayoutSize(600, 600);
         js.setLayoutAlpha(150);
         js.setStickAlpha(100);
         js.setOffset(90);
@@ -162,11 +162,11 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 js.drawStick(arg1);
 
-                if(arg1.getAction() == MotionEvent.ACTION_DOWN
+                if (arg1.getAction() == MotionEvent.ACTION_DOWN
                         || arg1.getAction() == MotionEvent.ACTION_MOVE) {
-                    textViewX       .setText("X : " + String.valueOf(js.getX()));
-                    textViewY       .setText("Y : " + String.valueOf(js.getY()));
-                    textViewAngle   .setText("Angle : " + String.valueOf(js.getAngle()));
+                    textViewX.setText("X : " + String.valueOf(js.getX()));
+                    textViewY.setText("Y : " + String.valueOf(js.getY()));
+                    textViewAngle.setText("Angle : " + String.valueOf(js.getAngle()));
                     textViewDistance.setText("Distance : " + String.valueOf(js.getDistance()));
 
                    /* if(eStopBtn.isPressed()){
@@ -175,32 +175,28 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
                     }*/
 
                     int direction = js.get4Direction();
-                    if(direction == JoyStickClass.STICK_UP) {
-                        if(connected) {
-                            tmBridge.sendDataToPairedDevice("f");
-                        }
-                        textViewDirection.setText("Direction : Up");
-                    } else if(direction == JoyStickClass.STICK_RIGHT) {
-                        if(connected) {
+                    if (direction == JoyStickClass.STICK_RIGHT) {
+                        if (connected) {
                             tmBridge.sendDataToPairedDevice("r");
                         }
                         textViewDirection.setText("Direction : Right");
-                    } else if(direction == JoyStickClass.STICK_DOWN) {
-                        if(connected) {
+                    } else if (direction == JoyStickClass.STICK_DOWN) {
+                        if (connected) {
                             tmBridge.sendDataToPairedDevice("b");
                         }
-                        textViewDirection.setText("Direction : Down");
-                    } else if(direction == JoyStickClass.STICK_LEFT) {
-                        if(connected) {
+                        textViewDirection.setText("Direction : Backward");
+                    } else if (direction == JoyStickClass.STICK_LEFT) {
+                        if (connected) {
                             tmBridge.sendDataToPairedDevice("l");
                         }
-                    } else if(direction == JoyStickClass.STICK_NONE) {
-                        if(connected) {
+                        textViewDirection.setText("Direction : Left");
+                    } else if (direction == JoyStickClass.STICK_NONE || direction == JoyStickClass.STICK_UP) {
+                        if (connected) {
                             tmBridge.sendDataToPairedDevice("f");
                         }
-                        textViewDirection.setText("Direction : Center");
+                        textViewDirection.setText("Direction : Forward");
                     }
-                } else if(arg1.getAction() == MotionEvent.ACTION_UP) {
+                } else if (arg1.getAction() == MotionEvent.ACTION_UP) {
                     textViewX.setText("X :");
                     textViewY.setText("Y :");
                     textViewAngle.setText("Angle :");
@@ -210,6 +206,16 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
                 return true;
             }
         });
+
+        eStopBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                if (connected){
+                    tmBridge.sendDataToPairedDevice("s");
+                }
+                textViewDirection.setText("CHAIR IS STOPPED");
+            }
+        });;
 
         return mView;
     }

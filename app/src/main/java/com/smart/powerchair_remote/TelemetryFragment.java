@@ -1,6 +1,9 @@
 package com.smart.powerchair_remote;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
@@ -8,10 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.DoubleBuffer;
@@ -42,8 +49,11 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     private View mView;
     private TextView tvGrndSpeed, tvAltitude, tvLatitude, tvLongitude, tvRngToObj;
     private TextView tvLEDFwdFreq,tvLEDRightFreq,tvLEDLeftFreq,tvLEDBackFreq, tvTelemetryTitle, tvTmStatusBar;
+    private TableLayout tvTable;
     private GridLayout tvGridLayout;
     private boolean populated, connected;
+
+    String[][] titles = new String[20][3];
 
     public enum Emotiv_Electrodes
     {
@@ -285,6 +295,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     //Full Telemetry Frame
     public class TMFrame
     {
+        boolean dataRecieved;
         MsgIdType MsgId; //Message Sent From BCI -> BRS -> MD
         int timeStamp;
         int bciState;
@@ -300,6 +311,9 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         boolean pccConnectionStatus;
         boolean brsConnectionStatus;
         boolean flasherConnectionStatus;
+
+        String[][] data = new String[21][3];
+
 
         TMFrame()
         {
@@ -362,7 +376,108 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_telemetry, container, false);
         populated = false;
-        tvTelemetryTitle = (TextView) mView.findViewById(R.id.Label);
+
+        titles[0][0] = "Time";
+        titles[0][1] = " ";
+        titles[1][0] = "BCI State";
+        titles[1][1] = " ";
+        titles[2][0] = "Last Command";
+        titles[2][1] = " ";
+        titles[3][0] = "Last Confidence";
+        titles[3][1] = " ";
+        titles[4][0] = "Current Command";
+        titles[4][1] = " ";
+        titles[5][0] = "Current Confidence";
+        titles[5][1] = " ";
+        titles[6][0] = "Latitude";
+        titles[6][1] = "Degrees";
+        titles[7][0] = "Longitude";
+        titles[7][1] = "Degrees";
+        titles[8][0] = "Altitude";
+        titles[8][1] = "Meters";
+        titles[9][0] = "Speed";
+        titles[9][1] = "Meters/S";
+        titles[10][0] = "Front Object Dist";
+        titles[10][1] = "Meters";
+        titles[11][0] = "Back Object Dist";
+        titles[11][1] = "Meters";
+        titles[12][0] = "LED Forward Freq";
+        titles[12][1] = "Hertz";
+        titles[13][0] = "LED Backward Freq";
+        titles[13][1] = "Hertz";
+        titles[14][0] = "LED Right Freq";
+        titles[14][1] = "Hertz";
+        titles[15][0] = "LED Left Freq";
+        titles[15][1] = "Hertz";
+        titles[16][0] = "EEG Connection";
+        titles[16][1] = " ";
+        titles[17][0] = "PCC Connection";
+        titles[17][1] = " ";
+        titles[18][0] = "BRS Connection";
+        titles[18][1] = " ";
+        titles[19][0] = "Flasher Connection";
+        titles[19][1] = " ";
+
+        for(int i = 0; i < titles.length; i++)
+        {
+            titles[i][2] = Integer.toString(0);
+        }
+        titles[16][2] = "OFF";
+        titles[17][2] = "OFF";
+        titles[18][2] = "OFF";
+        titles[19][2] = "OFF";
+
+        tvTable = (TableLayout) mView.findViewById(R.id.maintable);
+
+        for(int i = 0; i < titles.length; i++)
+        {
+            TableRow tableRow = new TableRow(this.getActivity());
+            tableRow.setId(i);
+            tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+            if(i%2 == 0)
+                tableRow.setBackgroundColor(Color.YELLOW);
+            else
+                tableRow.setBackgroundColor(Color.RED);
+
+            TextView labelTV = new TextView(this.getActivity());
+            labelTV.setId(100+i);
+            labelTV.setText(titles[i][0]);
+            labelTV.setTextColor(Color.BLACK);
+            labelTV.setTextSize(40);
+            labelTV.setLayoutParams(new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            tableRow.addView(labelTV);
+
+            // Create a TextView for value
+            TextView valueTV = new TextView(this.getActivity());
+            valueTV.setId(200+i);
+            valueTV.setText(titles[i][2]);
+            valueTV.setTextColor(Color.BLACK);
+            valueTV.setTextSize(40);
+            valueTV.setLayoutParams(new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            tableRow.addView(valueTV);
+
+            // Create a TextView for units
+            TextView unitsTV = new TextView(this.getActivity());
+            unitsTV.setId(300+i);
+            unitsTV.setText(titles[i][1]);
+            unitsTV.setTextColor(Color.BLACK);
+            unitsTV.setTextSize(40);
+            unitsTV.setLayoutParams(new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            tableRow.addView(unitsTV);
+
+            // Add the TableRow to the TableLayout
+            tvTable.addView(tableRow, new TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+        }
+
+        /*tvTelemetryTitle = (TextView) mView.findViewById(R.id.Label);
         tvGrndSpeed    = (TextView) mView.findViewById(R.id.GrndSpdValue);
         tvAltitude     = (TextView) mView.findViewById(R.id.AltitudeValue);
         tvLatitude     = (TextView) mView.findViewById(R.id.LatitudeValue);
@@ -371,22 +486,24 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         tvLEDFwdFreq   = (TextView) mView.findViewById(R.id.ledFwdFreq);
         tvLEDRightFreq = (TextView) mView.findViewById(R.id.ledRightFreq);
         tvLEDLeftFreq  = (TextView) mView.findViewById(R.id.ledLeftFreq);
-        tvLEDBackFreq  = (TextView) mView.findViewById(R.id.ledBackFreq);
+        tvLEDBackFreq  = (TextView) mView.findViewById(R.id.ledBackFreq);*/
 
         Thread t = new Thread() {
 
             @Override
             public void run() {
                 try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                    Thread.sleep(1000);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
                                 updateTelemetryFields();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        });
-                    }
+                        }
+                    });
                 } catch (InterruptedException e) {
                 }
             }
@@ -410,19 +527,19 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onRemoteInteraction() {
+    public void onRemoteInteraction() throws IOException {
         if (mListener != null) {
             mListener.onTelemetryFragmentInteraction();
         }
     }
 
-    public TMFrame getNextTMFrame()
-    {
+    public TMFrame getNextTMFrame() throws IOException {
         TMFrame tmFrame = new TMFrame();
         byte[] buffer = tmBridge.getDataFromPairedDevice();
 
         int currentIndex = 0;
 
+        tmFrame = null;
         for (int i = 0; i < buffer.length; i++)
         {
             //If we have enough bytes for a TM Frame, check if the Msg ID is correct
@@ -432,13 +549,13 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
                     buffer[i + 3] == '!' && buffer[i + 4] == '\0' )
                 {
                     ByteBuffer temp = ByteBuffer.wrap(buffer, i, i+99);
-
                     tmFrame.timeStamp = temp.getInt();
                     tmFrame.bciState  = temp.getInt();
                     tmFrame.lastCommand = temp.getChar();
                     tmFrame.lastConfidence = temp.getInt();
                     tmFrame.processingResult.command = temp.getChar();
-                    tmFrame.processingResult.confidence = temp.getChar();
+                    //Below was getChar
+                    tmFrame.processingResult.confidence = temp.getInt();
 
                     temp.getInt();
                     temp.getChar();
@@ -473,17 +590,64 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
 
 
 
-    public void updateTelemetryFields()
-    {
+    public void updateTelemetryFields() throws IOException {
+
+
         if(connected)
         {
-            tmBridge.sendDataToPairedDevice("TM");//Remove me
+            tmBridge.sendDataToPairedDevice("TM");
 
             //Get TM frame from Bluetooth device
-            final TMFrame tmFrameData = getNextTMFrame();
+            TMFrame tmFrameData = getNextTMFrame();
 
-            if (tmFrameData != null) {
-                tvGrndSpeed.setText(Float.toString(tmFrameData.brsFrame.sensorData.gpsData.groundSpeed));
+            if (tmFrameData != null)
+            {
+                titles[0][2] = Integer.toString(tmFrameData.timeStamp);
+                titles[1][2] = Integer.toString(tmFrameData.bciState);
+                titles[2][2] = Character.toString(tmFrameData.lastCommand);
+                titles[3][2] = Integer.toString(tmFrameData.lastConfidence);
+                titles[4][2] = Character.toString(tmFrameData.processingResult.command);
+                titles[5][2] = Integer.toString(tmFrameData.processingResult.confidence);
+                titles[6][2] = Float.toString(tmFrameData.brsFrame.sensorData.gpsData.latitude);
+                titles[7][2] = Float.toString(tmFrameData.brsFrame.sensorData.gpsData.longitude);
+                titles[8][2] = Float.toString(tmFrameData.brsFrame.sensorData.gpsData.altitude);
+                titles[9][2] = Float.toString(tmFrameData.brsFrame.sensorData.gpsData.groundSpeed);
+                titles[10][2] = Float.toString(tmFrameData.brsFrame.sensorData.rangeFinderData.rangeFront);
+                titles[11][2] = Float.toString(tmFrameData.brsFrame.sensorData.rangeFinderData.rangeBack);
+                titles[12][2] = Short.toString(tmFrameData.ledForward.frequency);
+                titles[13][2] = Short.toString(tmFrameData.ledBackward.frequency);
+                titles[14][2] = Short.toString(tmFrameData.ledRight.frequency);
+                titles[15][2] = Short.toString(tmFrameData.ledLeft.frequency);
+                if (tmFrameData.eegConnectionStatus == true) {
+                    titles[16][2] = "ON";
+                } else {
+                    titles[16][2] = "OFF";
+                }
+                if (tmFrameData.pccConnectionStatus == true) {
+                    titles[17][2] = "ON";
+                } else {
+                    titles[17][2] = "OFF";
+                }
+                if (tmFrameData.brsConnectionStatus == true) {
+                    titles[18][2] = "ON";
+                } else {
+                    titles[18][2] = "OFF";
+                }
+                if (tmFrameData.flasherConnectionStatus == true) {
+                    titles[19][2] = "ON";
+                } else {
+                    titles[19][2] = "OFF";
+                }
+                for(int i = 0; i < tvTable.getChildCount(); i++)
+                {
+                    TableRow row = (TableRow)tvTable.getChildAt(i);
+                    TextView textView = (TextView)row.findViewById(200+i);
+
+                    textView.setText(titles[i][2]);
+                }
+            }
+        }
+                /*tvGrndSpeed.setText(Float.toString(tmFrameData.brsFrame.sensorData.gpsData.groundSpeed));
                 tvAltitude.setText(Float.toString(tmFrameData.brsFrame.sensorData.gpsData.altitude));
                 tvLatitude.setText(Float.toString(tmFrameData.brsFrame.sensorData.gpsData.latitude));
                 tvLongitude.setText(Float.toString(tmFrameData.brsFrame.sensorData.gpsData.longitude));
@@ -492,15 +656,11 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
                 tvLEDFwdFreq.setText(Short.toString(tmFrameData.ledForward.frequency));
                 tvLEDRightFreq.setText(Short.toString(tmFrameData.ledRight.frequency));
                 tvLEDLeftFreq.setText(Short.toString(tmFrameData.ledLeft.frequency));
-                tvLEDBackFreq.setText(Short.toString(tmFrameData.ledBackward.frequency));
-            } else if (tmFrameData == null) {
-                System.out.println("No TM Data");
-                Toast.makeText(getActivity(), "No TM Data", Toast.LENGTH_LONG).show();
-            }
-        }   else if (!connected) {
-            System.out.println("Bluetooth Not Connected TM Update");
-            Toast.makeText(getActivity(), "Bluetooth Not Connected TM Update", Toast.LENGTH_LONG).show();
-        }
+                tvLEDBackFreq.setText(Short.toString(tmFrameData.ledBackward.frequency));*/
+        /*} else if (tmFrameData == null) {
+            System.out.println("No TM Data");
+            Toast.makeText(getActivity(), "No TM Data", Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     @Override
@@ -537,6 +697,6 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onTelemetryFragmentInteraction();
+        public void onTelemetryFragmentInteraction() throws IOException;
     }
 }

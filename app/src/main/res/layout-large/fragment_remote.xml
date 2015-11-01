@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.smart.powerchair_remote.RemoteFragment"
     android:id="@+id/remoteFragment"
-    android:background="#ffe8cc02">
+    android:background="#e1d6e8">
 
     <LinearLayout
         style="@android:style/TextAppearance.DeviceDefault.Medium"
@@ -57,12 +57,20 @@
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/layout_joystick"
-        android:layout_width="500dp"
-        android:layout_height="500dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@drawable/image_button_bg"
         android:onClick="onRemoteInteraction"
         android:layout_below="@+id/js_meas_layout"
-        android:layout_centerHorizontal="true">
+        android:layout_above="@+id/eStopBtn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+        <!--android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"-->
     </RelativeLayout>
 
     <TextView
@@ -84,7 +92,8 @@
         android:text="Emergency Stop"
         android:id="@+id/eStopBtn"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/holo_red_dark" />
 
 </RelativeLayout>
     <!--<RelativeLayout-->

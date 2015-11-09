@@ -6,4 +6,4 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
-<!-- From: file:/C:/Users/asand_000/Aaron/BCIApp/PowerChair_Remote/PowerChair_Remote/app/src/main/res/menu/main.xml -->
+<!-- From: file:/C:/Users/asand_000/Aaron/BCIApp/PowerChairRemoteBackup/PowerChair_Remote/app/src/main/res/menu/main.xml -->

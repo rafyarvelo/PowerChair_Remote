@@ -42,7 +42,7 @@ public class HelpFragment extends android.support.v4.app.Fragment implements Ada
     private View mView;
 
     private TelemetryBridge tmBridge;
-
+    boolean firstTime = true;
     String availableDevicesArray[];
 
     TextView connectionLabel;
@@ -84,7 +84,7 @@ public class HelpFragment extends android.support.v4.app.Fragment implements Ada
                              Bundle savedInstanceState)  {
         // Inflate the layout for this fragment
         mView =  inflater.inflate(R.layout.fragment_help, container, false);
-
+        firstTime = true;
         connectionLabel = (TextView) mView.findViewById(R.id.textViewConnStatus);
         if(tmBridge.GetConnected())
         {
@@ -137,37 +137,37 @@ public class HelpFragment extends android.support.v4.app.Fragment implements Ada
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
     {
-
-        tmBridge.SetDevice((String) tmBridge.GetAvailableDevices().toArray()[i]);
-        tmBridge = TelemetryBridge.Instance();
-        connected    = tmBridge.GetConnected();
-        if(connected)
-        {
-            try {
-                tmBridge.disconnect();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if(!firstTime) {
+            tmBridge.SetDevice((String) tmBridge.GetAvailableDevices().toArray()[i]);
+            tmBridge = TelemetryBridge.Instance();
             connected = tmBridge.GetConnected();
-            System.out.println("Connection Closed");
-            Toast.makeText(getActivity(), "Connection Closed", Toast.LENGTH_SHORT).show();
-        }
-        if(!connected)
-        {
-            tmBridge.connect();
-            connected    = tmBridge.GetConnected();
-            if(connected) {
-                System.out.println("Bluetooth Opened");
-                Toast.makeText(getActivity(), "Bluetooth Opened", Toast.LENGTH_SHORT).show();
-                connectionLabel.setText("CONNECTED TO " + tmBridge.GetDevice());
-                connectionLabel.setBackgroundColor(Color.GREEN);
-            } else{
-                System.out.println("Bluetooth Not Opened");
-                Toast.makeText(getActivity(), "Bluetooth Not Opened", Toast.LENGTH_SHORT).show();
-                connectionLabel.setText("NOT CONNECTED");
-                connectionLabel.setBackgroundColor(Color.RED);
+            if (connected) {
+                try {
+                    tmBridge.disconnect();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                connected = tmBridge.GetConnected();
+                System.out.println("Connection Closed");
+                Toast.makeText(getActivity(), "Connection Closed", Toast.LENGTH_SHORT).show();
+            }
+            if (!connected) {
+                tmBridge.connect();
+                connected = tmBridge.GetConnected();
+                if (connected) {
+                    System.out.println("Bluetooth Opened");
+                    Toast.makeText(getActivity(), "Bluetooth Opened", Toast.LENGTH_SHORT).show();
+                    connectionLabel.setText("CONNECTED TO " + tmBridge.GetDevice());
+                    connectionLabel.setBackgroundColor(Color.GREEN);
+                } else {
+                    System.out.println("Bluetooth Not Opened");
+                    Toast.makeText(getActivity(), "Bluetooth Not Opened", Toast.LENGTH_SHORT).show();
+                    connectionLabel.setText("NOT CONNECTED");
+                    connectionLabel.setBackgroundColor(Color.RED);
+                }
             }
         }
+        firstTime = false;
     }
 
     @Override

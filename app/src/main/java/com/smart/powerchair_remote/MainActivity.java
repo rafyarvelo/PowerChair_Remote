@@ -88,15 +88,19 @@ public class MainActivity extends ActionBarActivity
         switch (position)
         {
             case SMART_REMOTE:
+                TelemetryFragment.notInterrupted.set(false);
                 objFragment = RemoteFragment.Instance(tmBridge);
                 break;
             case TM_STREAM:
+                TelemetryFragment.notInterrupted.set(true);
                 objFragment = TelemetryFragment.newInstance(tmBridge);
                 break;
             case HELP_SCREEN:
+                TelemetryFragment.notInterrupted.set(false);
                 objFragment = new HelpFragment();
                 break;
             case MAP_SCREEN:
+                TelemetryFragment.notInterrupted.set(false);
                 objFragment = GoogleMapsFragment.newInstance(tmBridge);
                 ((GoogleMapsFragment) objFragment).setUpMapIfNeeded();
                 break;

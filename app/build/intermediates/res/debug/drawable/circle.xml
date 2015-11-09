@@ -6,4 +6,4 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval" >
     <corners android:radius="2dp"/>
     <solid android:color="#ff02020b" />
-</shape><!-- From: file:/C:/Users/asand_000/Aaron/BCIApp/PowerChair_Remote/PowerChair_Remote/app/src/main/res/drawable/circle.xml -->
+</shape><!-- From: file:/C:/Users/asand_000/Aaron/BCIApp/PowerChairRemoteBackup/PowerChair_Remote/app/src/main/res/drawable/circle.xml -->

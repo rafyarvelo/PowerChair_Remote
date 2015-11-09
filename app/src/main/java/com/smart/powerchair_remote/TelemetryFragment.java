@@ -28,6 +28,7 @@ import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.google.android.gms.internal.zzhl.runOnUiThread;
 import static com.smart.powerchair_remote.SmartDataTypes.*;
@@ -52,6 +53,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     private TableLayout tvTable;
     private GridLayout tvGridLayout;
     private boolean populated, connected;
+    public static AtomicBoolean notInterrupted = new AtomicBoolean(true);
 
     String[][] titles = new String[20][3];
 
@@ -283,7 +285,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
 
     public class ProcessingResult
     {
-        public char command;
+        public byte command;
         public int confidence;
 
         ProcessingResult()
@@ -299,7 +301,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         MsgIdType MsgId; //Message Sent From BCI -> BRS -> MD
         int timeStamp;
         int bciState;
-        char lastCommand;
+        byte lastCommand;
         int lastConfidence;
         ProcessingResult processingResult;
         BRSFrame brsFrame;
@@ -487,23 +489,25 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         tvLEDRightFreq = (TextView) mView.findViewById(R.id.ledRightFreq);
         tvLEDLeftFreq  = (TextView) mView.findViewById(R.id.ledLeftFreq);
         tvLEDBackFreq  = (TextView) mView.findViewById(R.id.ledBackFreq);*/
-
         Thread t = new Thread() {
 
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                updateTelemetryFields();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                    while(notInterrupted.get()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    updateTelemetryFields();
+
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 } catch (InterruptedException e) {
                 }
             }
@@ -539,28 +543,25 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
 
         int currentIndex = 0;
 
-        tmFrame = null;
         for (int i = 0; i < buffer.length; i++)
         {
             //If we have enough bytes for a TM Frame, check if the Msg ID is correct
-            if (buffer.length - i >= 100)
-            {
-                if (buffer[i]     == 'B' && buffer[i+1]   == 'L'&& buffer[i + 2] == 'T' &&
-                    buffer[i + 3] == '!' && buffer[i + 4] == '\0' )
-                {
-                    ByteBuffer temp = ByteBuffer.wrap(buffer, i, i+99);
+            if (buffer.length - i >= 100) {
+                if (buffer[i] == 'B' && buffer[i + 1] == 'L' && buffer[i + 2] == 'T' &&
+                        buffer[i + 3] == '!' && buffer[i + 4] == '\0') {
+                    ByteBuffer temp = ByteBuffer.wrap(buffer, i, i + 99);
                     tmFrame.timeStamp = temp.getInt();
-                    tmFrame.bciState  = temp.getInt();
-                    tmFrame.lastCommand = temp.getChar();
+                    tmFrame.bciState = temp.getInt();
+                    tmFrame.lastCommand = temp.get();
                     tmFrame.lastConfidence = temp.getInt();
-                    tmFrame.processingResult.command = temp.getChar();
+                    tmFrame.processingResult.command = temp.get();
                     //Below was getChar
                     tmFrame.processingResult.confidence = temp.getInt();
 
                     temp.getInt();
                     temp.getChar();
                     tmFrame.brsFrame.MsgId = new MsgIdType("BRS!");
-                    tmFrame.brsFrame.btFrame.remoteCommand = (byte)temp.getChar();
+                    tmFrame.brsFrame.btFrame.remoteCommand = (byte) temp.getChar();
                     tmFrame.brsFrame.sensorData.gpsData.latitude = temp.getFloat();
                     tmFrame.brsFrame.sensorData.gpsData.longitude = temp.getFloat();
                     tmFrame.brsFrame.sensorData.gpsData.altitude = temp.getFloat();
@@ -580,10 +581,12 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
                     tmFrame.brsConnectionStatus = (temp.getChar() == 0x01) ? true : false;
                     tmFrame.flasherConnectionStatus = (temp.getChar() == 0x01) ? true : false;
 
+                    return tmFrame;
+
                 }
             }
         }
-
+        tmFrame = null;
         return tmFrame;
     }
 
@@ -604,9 +607,9 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
             {
                 titles[0][2] = Integer.toString(tmFrameData.timeStamp);
                 titles[1][2] = Integer.toString(tmFrameData.bciState);
-                titles[2][2] = Character.toString(tmFrameData.lastCommand);
+                titles[2][2] = Character.toString((char) tmFrameData.lastCommand);
                 titles[3][2] = Integer.toString(tmFrameData.lastConfidence);
-                titles[4][2] = Character.toString(tmFrameData.processingResult.command);
+                titles[4][2] = Character.toString((char) tmFrameData.processingResult.command);
                 titles[5][2] = Integer.toString(tmFrameData.processingResult.confidence);
                 titles[6][2] = Float.toString(tmFrameData.brsFrame.sensorData.gpsData.latitude);
                 titles[7][2] = Float.toString(tmFrameData.brsFrame.sensorData.gpsData.longitude);

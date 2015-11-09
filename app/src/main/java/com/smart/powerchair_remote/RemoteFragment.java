@@ -81,6 +81,8 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
     OutputStream mmOutputStream;
     InputStream mmInputStream;
 
+    String previousCommand = "";
+
     BluetoothDevice bluetoothDevice = null;
 
     JoyStickClass js;
@@ -176,22 +178,26 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
 
                     int direction = js.get4Direction();
                     if (direction == JoyStickClass.STICK_RIGHT) {
-                        if (connected) {
+                        if (connected && previousCommand != "r") {
+                            previousCommand = "r";
                             tmBridge.sendDataToPairedDevice("r");
                         }
                         textViewDirection.setText("Direction : Right");
                     } else if (direction == JoyStickClass.STICK_DOWN) {
-                        if (connected) {
+                        if (connected && previousCommand != "b") {
+                            previousCommand = "b";
                             tmBridge.sendDataToPairedDevice("b");
                         }
                         textViewDirection.setText("Direction : Backward");
                     } else if (direction == JoyStickClass.STICK_LEFT) {
-                        if (connected) {
+                        if (connected && previousCommand != "l") {
+                            previousCommand = "l";
                             tmBridge.sendDataToPairedDevice("l");
                         }
                         textViewDirection.setText("Direction : Left");
                     } else if (direction == JoyStickClass.STICK_NONE || direction == JoyStickClass.STICK_UP) {
-                        if (connected) {
+                        if (connected && previousCommand != "f") {
+                            previousCommand = "f";
                             tmBridge.sendDataToPairedDevice("f");
                         }
                         textViewDirection.setText("Direction : Forward");

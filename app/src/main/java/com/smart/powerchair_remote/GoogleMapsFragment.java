@@ -2,15 +2,22 @@ package com.smart.powerchair_remote;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -25,11 +32,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class GoogleMapsFragment extends android.support.v4.app.Fragment {
 
+    private static final String TAG = "Maps";
     private GoogleMap mMap;
     private TelemetryBridge tmBridge;
     private OnFragmentInteractionListener mListener;
     private View mView;
     private MapView mMapView;
+    private SupportMapFragment mapFragment;
 
     private LatLng mLatLng;
     private MarkerOptions mMarkerOptions;
@@ -55,7 +64,6 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setUpMapIfNeeded();
     }
 
     public void setTmBridge(TelemetryBridge tmBridgeRef)
@@ -66,7 +74,6 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        setUpMapIfNeeded();
     }
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
@@ -87,8 +94,13 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            //mMap = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map))
-                    //.getMap();
+
+            /*android.support.v4.app.FragmentManager fM = this.getFragmentManager();
+            SupportMapFragment id = (SupportMapFragment) fM.findFragmentById(R.id.map);
+            mMap = id.getMap();*/
+
+           // mMap = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+
 
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
@@ -108,7 +120,7 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
     private void setUpMap() {
         mMarkerOptions.position(mLatLng)
                       .title(mMarkerTitle)
-                      .snippet("The Best School in the World");
+                .snippet("The Best School in the World");
 
 
         mMap.clear();
@@ -123,6 +135,7 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_google_maps, container, false);
         // Inflate the layout for this fragment
+        setUpMapIfNeeded();
         return mView;
     }
 
@@ -177,3 +190,4 @@ public class GoogleMapsFragment extends android.support.v4.app.Fragment {
     }
 
 }
+

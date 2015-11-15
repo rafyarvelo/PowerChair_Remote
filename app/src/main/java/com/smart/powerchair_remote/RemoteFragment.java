@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -39,6 +41,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
@@ -63,6 +67,9 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
 
     private static final int SUCCESS_CONNECT = 0;
     private static final int MESSAGE_READ = 1;
+    private static final int SPEECH_REQUEST_CODE = 0;
+    private static final int RESULT_OK = -1;
+
     private boolean connected;
     private boolean dataSent;
     private boolean dataReceived;
@@ -88,7 +95,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
     JoyStickClass js;
 
     RelativeLayout layout_joystick;
-    Button eStopBtn;
+    Button eStopBtn, voiceBtn;
     ImageView image_joystick, image_border;
     TextView textViewX, textViewY, textViewAngle, textViewDistance, textViewDirection;
 
@@ -149,6 +156,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         textViewDirection = (TextView)mView.findViewById(R.id.textViewDirection);
         layout_joystick = (RelativeLayout)mView.findViewById(R.id.layout_joystick);
         eStopBtn = (Button)mView.findViewById(R.id.eStopBtn);
+        voiceBtn = (Button) mView.findViewById(R.id.voiceButton);
 
         js = new JoyStickClass(getActivity().getApplicationContext()
                 , layout_joystick, R.drawable.image_button);
@@ -195,7 +203,7 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
                             tmBridge.sendDataToPairedDevice("l");
                         }
                         textViewDirection.setText("Direction : Left");
-                    } else if (direction == JoyStickClass.STICK_NONE || direction == JoyStickClass.STICK_UP) {
+                    } else if (direction == JoyStickClass.STICK_UP) {
                         if (connected && previousCommand != "f") {
                             previousCommand = "f";
                             tmBridge.sendDataToPairedDevice("f");
@@ -214,16 +222,72 @@ public class RemoteFragment extends android.support.v4.app.Fragment{
         });
 
         eStopBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                if (connected){
+            public void onClick(View v) {
+                if (connected) {
                     tmBridge.sendDataToPairedDevice("s");
+                    textViewDirection.setText("CHAIR IS STOPPED");
                 }
-                textViewDirection.setText("CHAIR IS STOPPED");
             }
         });;
 
+        voiceBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                displaySpeechRecognizer();
+            }
+        });
+
         return mView;
+    }
+
+    // Create an intent that can start the Speech Recognizer activity
+    private void displaySpeechRecognizer() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        // Start the activity, the intent will be populated with the speech text
+        startActivityForResult(intent, SPEECH_REQUEST_CODE);
+    }
+
+    // This callback is invoked when the Speech Recognizer returns.
+    // This is where you process the intent and extract the speech text from the intent.
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent data) {
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<String> results = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            String spokenText = results.get(0);
+            if((spokenText.equals("forward") || spokenText.equals("forwards")) && connected)
+            {
+                tmBridge.sendDataToPairedDevice("f");
+                Toast.makeText(this.getActivity(), "Moving Forward", Toast.LENGTH_SHORT).show();
+            }
+            else if((spokenText.equals("backward") || spokenText.equals("backwards")) && connected)
+            {
+                tmBridge.sendDataToPairedDevice("b");
+                Toast.makeText(this.getActivity(), "Moving Backward", Toast.LENGTH_SHORT).show();
+            }
+            else if(spokenText.equals("left") && connected)
+            {
+                tmBridge.sendDataToPairedDevice("l");
+                Toast.makeText(this.getActivity(), "Moving Left", Toast.LENGTH_SHORT).show();
+            }
+            else if(spokenText.equals("right") && connected)
+            {
+                tmBridge.sendDataToPairedDevice("r");
+                Toast.makeText(this.getActivity(), "Moving Right", Toast.LENGTH_SHORT).show();
+            }
+            else if(spokenText.equals("stop") && connected)
+            {
+                tmBridge.sendDataToPairedDevice("s");
+                Toast.makeText(this.getActivity(), "Chair Stopping", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                Toast.makeText(this.getActivity(), "Did not catch command: "+spokenText, Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

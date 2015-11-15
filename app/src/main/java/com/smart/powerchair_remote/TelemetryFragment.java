@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -297,7 +298,6 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     //Full Telemetry Frame
     public class TMFrame
     {
-        boolean dataRecieved;
         MsgIdType MsgId; //Message Sent From BCI -> BRS -> MD
         int timeStamp;
         int bciState;
@@ -309,10 +309,10 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         LEDGroup ledBackward;
         LEDGroup ledRight;
         LEDGroup ledLeft;
-        boolean eegConnectionStatus;
-        boolean pccConnectionStatus;
-        boolean brsConnectionStatus;
-        boolean flasherConnectionStatus;
+        int eegConnectionStatus;
+        int pccConnectionStatus;
+        int brsConnectionStatus;
+        int flasherConnectionStatus;
 
         String[][] data = new String[21][3];
 
@@ -330,10 +330,10 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
             ledBackward             = new LEDGroup(1, LEDGroup.LED_BACKWARD_FREQ_DEFAULT );
             ledRight                = new LEDGroup(2, LEDGroup.LED_RIGHT_FREQ_DEFAULT );
             ledLeft                 = new LEDGroup(3, LEDGroup.LED_LEFT_FREQ_DEFAULT );
-            eegConnectionStatus     = false;
-            pccConnectionStatus     = false;
-            brsConnectionStatus     = false;
-            flasherConnectionStatus = false;
+            eegConnectionStatus     = 0;
+            pccConnectionStatus     = 0;
+            brsConnectionStatus     = 0;
+            flasherConnectionStatus = 0;
         }
     }
 
@@ -387,9 +387,9 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         titles[2][1] = " ";
         titles[3][0] = "Last Confidence";
         titles[3][1] = " ";
-        titles[4][0] = "Current Command";
+        titles[4][0] = "EEG Command";
         titles[4][1] = " ";
-        titles[5][0] = "Current Confidence";
+        titles[5][0] = "EEG Confidence";
         titles[5][1] = " ";
         titles[6][0] = "Latitude";
         titles[6][1] = "Degrees";
@@ -537,6 +537,10 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         }
     }
 
+    public String Int2String(){
+        return new String("Stupid");
+    }
+
     public TMFrame getNextTMFrame() throws IOException {
         TMFrame tmFrame = new TMFrame();
         byte[] buffer = tmBridge.getDataFromPairedDevice();
@@ -548,38 +552,74 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
             //If we have enough bytes for a TM Frame, check if the Msg ID is correct
             if (buffer.length - i >= 100) {
                 if (buffer[i] == 'B' && buffer[i + 1] == 'L' && buffer[i + 2] == 'T' &&
-                        buffer[i + 3] == '!' && buffer[i + 4] == '\0') {
+                        buffer[i + 3] == '!' && buffer[i + 4] == '\0')
+                {
                     ByteBuffer temp = ByteBuffer.wrap(buffer, i, i + 99);
-                    tmFrame.timeStamp = temp.getInt();
-                    tmFrame.bciState = temp.getInt();
-                    tmFrame.lastCommand = temp.get();
-                    tmFrame.lastConfidence = temp.getInt();
-                    tmFrame.processingResult.command = temp.get();
-                    //Below was getChar
-                    tmFrame.processingResult.confidence = temp.getInt();
 
-                    temp.getInt();
-                    temp.getChar();
+                    for(int j = 0; j < 5; j++)
+                    {
+                        //skip over message id
+                        temp.get();
+                    }
+
+                    tmFrame.timeStamp = temp.getInt();
+                    //tmFrame.timeStamp = 22;
+                    tmFrame.bciState = temp.getInt();
+                    //tmFrame.bciState = 23;
+                    tmFrame.lastCommand = temp.get();
+                    //tmFrame.lastCommand = 24;
+                    tmFrame.lastConfidence = temp.getInt();
+                    //tmFrame.lastConfidence = 0;
+                    tmFrame.processingResult.command = temp.get();
+                    //tmFrame.processingResult.command = 1;
+                    tmFrame.processingResult.confidence = temp.getInt();
+                    //tmFrame.processingResult.confidence = 2;
+                    for(int j = 0; j < 5; j++)
+                    {
+                        //skip over message id
+                        temp.get();
+                    }
+
                     tmFrame.brsFrame.MsgId = new MsgIdType("BRS!");
                     tmFrame.brsFrame.btFrame.remoteCommand = (byte) temp.getChar();
+                    //tmFrame.brsFrame.btFrame.remoteCommand = 3;
                     tmFrame.brsFrame.sensorData.gpsData.latitude = temp.getFloat();
+                    //tmFrame.brsFrame.sensorData.gpsData.latitude = 4;
                     tmFrame.brsFrame.sensorData.gpsData.longitude = temp.getFloat();
+                    //tmFrame.brsFrame.sensorData.gpsData.longitude = 5;
                     tmFrame.brsFrame.sensorData.gpsData.altitude = temp.getFloat();
+                    //tmFrame.brsFrame.sensorData.gpsData.altitude = 6;
                     tmFrame.brsFrame.sensorData.gpsData.groundSpeed = temp.getFloat();
+                    //tmFrame.brsFrame.sensorData.gpsData.groundSpeed = 7;
                     tmFrame.brsFrame.sensorData.rangeFinderData.rangeFront = temp.getFloat();
+                    //tmFrame.brsFrame.sensorData.rangeFinderData.rangeFront = 8;
                     tmFrame.brsFrame.sensorData.rangeFinderData.rangeBack = temp.getFloat();
+                    //tmFrame.brsFrame.sensorData.rangeFinderData.rangeBack = 9;
                     tmFrame.ledForward.id = temp.getInt();
+                    //tmFrame.ledForward.id = 10;
                     tmFrame.ledForward.frequency = temp.getShort();
+                    //tmFrame.ledForward.frequency = 11;
                     tmFrame.ledBackward.id = temp.getInt();
+                    //tmFrame.ledBackward.id = 12;
                     tmFrame.ledBackward.frequency = temp.getShort();
+                    //tmFrame.ledBackward.frequency = 13;
                     tmFrame.ledRight.id = temp.getInt();
+                    //tmFrame.ledRight.id = 14;
                     tmFrame.ledRight.frequency = temp.getShort();
+                    //tmFrame.ledRight.frequency = 21;
                     tmFrame.ledLeft.id = temp.getInt();
+                    //tmFrame.ledLeft.id = 15;
                     tmFrame.ledLeft.frequency = temp.getShort();
-                    tmFrame.eegConnectionStatus = (temp.getChar() == 0x01) ? true : false;
-                    tmFrame.pccConnectionStatus = (temp.getChar() == 0x01) ? true : false;
-                    tmFrame.brsConnectionStatus = (temp.getChar() == 0x01) ? true : false;
-                    tmFrame.flasherConnectionStatus = (temp.getChar() == 0x01) ? true : false;
+                    //tmFrame.ledLeft.frequency = 16;
+                    tmFrame.eegConnectionStatus = temp.getInt();
+                    //tmFrame.eegConnectionStatus = 17;
+                    tmFrame.pccConnectionStatus = temp.getInt();
+                    //tmFrame.pccConnectionStatus = 18;
+                    tmFrame.brsConnectionStatus = temp.getInt();
+                    //tmFrame.brsConnectionStatus = 19;
+                    tmFrame.flasherConnectionStatus = temp.getInt();
+                    //tmFrame.flasherConnectionStatus = 20;
+
 
                     return tmFrame;
 
@@ -621,22 +661,22 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
                 titles[13][2] = Short.toString(tmFrameData.ledBackward.frequency);
                 titles[14][2] = Short.toString(tmFrameData.ledRight.frequency);
                 titles[15][2] = Short.toString(tmFrameData.ledLeft.frequency);
-                if (tmFrameData.eegConnectionStatus == true) {
+                if (tmFrameData.eegConnectionStatus == 1) {
                     titles[16][2] = "ON";
                 } else {
                     titles[16][2] = "OFF";
                 }
-                if (tmFrameData.pccConnectionStatus == true) {
+                if (tmFrameData.pccConnectionStatus == 1) {
                     titles[17][2] = "ON";
                 } else {
                     titles[17][2] = "OFF";
                 }
-                if (tmFrameData.brsConnectionStatus == true) {
+                if (tmFrameData.brsConnectionStatus == 1) {
                     titles[18][2] = "ON";
                 } else {
                     titles[18][2] = "OFF";
                 }
-                if (tmFrameData.flasherConnectionStatus == true) {
+                if (tmFrameData.flasherConnectionStatus == 1) {
                     titles[19][2] = "ON";
                 } else {
                     titles[19][2] = "OFF";

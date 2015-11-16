@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -446,7 +447,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
             labelTV.setId(100+i);
             labelTV.setText(titles[i][0]);
             labelTV.setTextColor(Color.BLACK);
-            labelTV.setTextSize(40);
+            labelTV.setTextSize(35);
             labelTV.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -457,7 +458,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
             valueTV.setId(200+i);
             valueTV.setText(titles[i][2]);
             valueTV.setTextColor(Color.BLACK);
-            valueTV.setTextSize(40);
+            valueTV.setTextSize(35);
             valueTV.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
@@ -465,10 +466,11 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
 
             // Create a TextView for units
             TextView unitsTV = new TextView(this.getActivity());
-            unitsTV.setId(300+i);
+            unitsTV.setId(300 + i);
             unitsTV.setText(titles[i][1]);
             unitsTV.setTextColor(Color.BLACK);
-            unitsTV.setTextSize(40);
+            unitsTV.setTextSize(35);
+            unitsTV.setGravity(Gravity.RIGHT);
             unitsTV.setLayoutParams(new TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));

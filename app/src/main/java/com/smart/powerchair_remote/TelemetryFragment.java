@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
@@ -376,6 +377,7 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        titles[4][1] = " ";
         mView = inflater.inflate(R.layout.fragment_telemetry, container, false);
         populated = false;
 
@@ -388,7 +390,6 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         titles[3][0] = "Last Confidence";
         titles[3][1] = " ";
         titles[4][0] = "EEG Command";
-        titles[4][1] = " ";
         titles[5][0] = "EEG Confidence";
         titles[5][1] = " ";
         titles[6][0] = "Latitude";
@@ -406,11 +407,11 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         titles[12][0] = "LED Forward Freq";
         titles[12][1] = "Hertz";
         titles[13][0] = "LED Backward Freq";
+        titles[15][0] = "LED Left Freq";
+        titles[15][1] = "Hertz";
         titles[13][1] = "Hertz";
         titles[14][0] = "LED Right Freq";
         titles[14][1] = "Hertz";
-        titles[15][0] = "LED Left Freq";
-        titles[15][1] = "Hertz";
         titles[16][0] = "EEG Connection";
         titles[16][1] = " ";
         titles[17][0] = "PCC Connection";
@@ -550,13 +551,13 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
         for (int i = 0; i < buffer.length; i++)
         {
             //If we have enough bytes for a TM Frame, check if the Msg ID is correct
-            if (buffer.length - i >= 100) {
+            if (buffer.length - i >= 144) {
                 if (buffer[i] == 'B' && buffer[i + 1] == 'L' && buffer[i + 2] == 'T' &&
                         buffer[i + 3] == '!' && buffer[i + 4] == '\0')
                 {
-                    ByteBuffer temp = ByteBuffer.wrap(buffer, i, i + 99);
-
-                    for(int j = 0; j < 5; j++)
+                    ByteBuffer temp = ByteBuffer.wrap(buffer, i, i + 143);
+                    temp.order(ByteOrder.LITTLE_ENDIAN);
+                    for(int j = 0; j < 8; j++)
                     {
                         //skip over message id
                         temp.get();
@@ -567,21 +568,36 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
                     tmFrame.bciState = temp.getInt();
                     //tmFrame.bciState = 23;
                     tmFrame.lastCommand = temp.get();
+                    for(int j = 0; j < 3; j++)
+                    {
+                        //skip over message id
+                        temp.get();
+                    }
                     //tmFrame.lastCommand = 24;
                     tmFrame.lastConfidence = temp.getInt();
                     //tmFrame.lastConfidence = 0;
                     tmFrame.processingResult.command = temp.get();
+                    for(int j = 0; j < 3; j++)
+                    {
+                        //skip over message id
+                        temp.get();
+                    }
                     //tmFrame.processingResult.command = 1;
                     tmFrame.processingResult.confidence = temp.getInt();
                     //tmFrame.processingResult.confidence = 2;
-                    for(int j = 0; j < 5; j++)
+                    for(int j = 0; j < 8; j++)
                     {
                         //skip over message id
                         temp.get();
                     }
 
                     tmFrame.brsFrame.MsgId = new MsgIdType("BRS!");
-                    tmFrame.brsFrame.btFrame.remoteCommand = (byte) temp.getChar();
+                    tmFrame.brsFrame.btFrame.remoteCommand = (byte) temp.get();
+                    for(int j = 0; j < 3; j++)
+                    {
+                        //skip over message id
+                        temp.get();
+                    }
                     //tmFrame.brsFrame.btFrame.remoteCommand = 3;
                     tmFrame.brsFrame.sensorData.gpsData.latitude = temp.getFloat();
                     //tmFrame.brsFrame.sensorData.gpsData.latitude = 4;
@@ -598,18 +614,38 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
                     tmFrame.ledForward.id = temp.getInt();
                     //tmFrame.ledForward.id = 10;
                     tmFrame.ledForward.frequency = temp.getShort();
+                    for(int j = 0; j < 2; j++)
+                    {
+                        //skip over message id
+                        temp.get();
+                    }
                     //tmFrame.ledForward.frequency = 11;
                     tmFrame.ledBackward.id = temp.getInt();
                     //tmFrame.ledBackward.id = 12;
                     tmFrame.ledBackward.frequency = temp.getShort();
+                    for(int j = 0; j < 2; j++)
+                    {
+                        //skip over message id
+                        temp.get();
+                    }
                     //tmFrame.ledBackward.frequency = 13;
                     tmFrame.ledRight.id = temp.getInt();
                     //tmFrame.ledRight.id = 14;
                     tmFrame.ledRight.frequency = temp.getShort();
+                    for(int j = 0; j < 2; j++)
+                    {
+                        //skip over message id
+                        temp.get();
+                    }
                     //tmFrame.ledRight.frequency = 21;
                     tmFrame.ledLeft.id = temp.getInt();
                     //tmFrame.ledLeft.id = 15;
                     tmFrame.ledLeft.frequency = temp.getShort();
+                    for(int j = 0; j < 2; j++)
+                    {
+                        //skip over message id
+                        temp.get();
+                    }
                     //tmFrame.ledLeft.frequency = 16;
                     tmFrame.eegConnectionStatus = temp.getInt();
                     //tmFrame.eegConnectionStatus = 17;
@@ -619,7 +655,6 @@ public class TelemetryFragment extends android.support.v4.app.Fragment {
                     //tmFrame.brsConnectionStatus = 19;
                     tmFrame.flasherConnectionStatus = temp.getInt();
                     //tmFrame.flasherConnectionStatus = 20;
-
 
                     return tmFrame;
 
